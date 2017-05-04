@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:background="@drawable/listview_bg"
+              android:orientation="horizontal">
+
+
+    <RelativeLayout
+        android:layout_width="40dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/folder_icon"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_marginLeft="2dip"
+            android:src="@mipmap/uspace_default_folder"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/folder_name"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1.0"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:paddingLeft="2.0dip"
+        android:text="abxce_acasdasdae.txt"
+        android:textColor="#656565"
+        android:textSize="15sp"/>
+
+    <CheckBox
+        android:id="@+id/folder_exploer_file_cbox"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:button="@drawable/msg_item_checkbox"
+        android:clickable="true"
+        android:focusable="false"/>
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:title="@string/menu_title_rename" android:id="@+id/menu_rename_folder" />
+	<item android:title="@string/menu_title_move_file" android:id="@+id/uspace_menu_move_folder" />
+	<item android:title="@string/menu_title_delete_folder" android:id="@+id/uspace_menu_delete_folder" />
+	<item android:title="@string/menu_title_publish_file" android:id="@+id/uspace_menu_publish_folder" />
+	<item android:title="@string/menu_title_unpublish_file"
+		android:id="@+id/uspace_menu_unpublish_folder" />
+</menu>

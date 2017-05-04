@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+
+    <!-- 边角的圆弧半径 -->
+    <corners android:radius="16dp" />
+
+    <!-- 实心填充 -->
+    <solid android:color="@android:color/white" />
+
+    <!--&lt;!&ndash; 描边：一般大小都是1dp &ndash;&gt;-->
+    <!--<stroke-->
+        <!--android:width="1dp"-->
+        <!--android:color="#ff000000" />-->
+
+    <!--&lt;!&ndash; 四周留出来的空白,和xml文件中的pad效果一样，对内起作用 &ndash;&gt;-->
+    <!--<padding-->
+        <!--android:bottom="30dp"-->
+        <!--android:left="20dp"-->
+        <!--android:right="30dp"-->
+        <!--android:top="20dp" />-->
+
+    <!--&lt;!&ndash; 背景颜色渐变 &ndash;&gt;-->
+    <!--<gradient-->
+        <!--android:angle="90"-->
+        <!--android:endColor="#ff00ff00"-->
+        <!--android:startColor="#ff0000ff" />-->
+
+</shape>

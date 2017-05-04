@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/trans_download_list_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:cacheColorHint="#00000000"
+        android:divider="@mipmap/divider_horizontal_timeline"
+        android:dividerHeight="1.0dip"
+        android:fastScrollEnabled="true"
+        android:listSelector="@mipmap/uspace_hover_line">
+    </ListView>
+
+    <TextView
+        android:id="@+id/trans_download_empty_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="您还没有下载文件哦~"
+        android:textColor="@color/uspace_textColorSecondary"
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/trans_download_loading"
+        layout="@layout/loading_30_layout"
+        android:visibility="gone"/>
+    <!--<TextView-->
+    <!--android:id="@+id/task_mng_no_task"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/task_mng_no_task"-->
+    <!--android:textColor="@color/attachment_title"-->
+    <!--android:visibility="gone"/>-->
+</FrameLayout>

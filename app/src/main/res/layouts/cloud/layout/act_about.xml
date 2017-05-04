@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_launcher"
+                android:orientation="vertical">
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="47dp"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:background="@drawable/bar_x_head"-->
+    <!--android:gravity="center_vertical">-->
+
+    <!--<ImageView-->
+    <!--android:id="@id/btn_back"-->
+    <!--android:layout_width="40dip"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/wb_back_selector"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@id/wb_header_tv"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:text="关于"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="18sp"/>-->
+    <!--</RelativeLayout>-->
+
+    <!--<com.uit.uspace.widget.USpaceToolBar-->
+    <!--android:id="@+id/about_toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:center_title="关于"/>-->
+
+    <ImageView
+        android:id="@+id/about_back_iv"
+        android:layout_margin="5dp"
+        android:background="@drawable/selector_go_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/about_version_tv"
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:layout_above="@+id/about_website_tv"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Yopan 1.0 beta"
+            android:textColor="@color/uspace_textColorSecondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/about_website_tv"
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:layout_above="@+id/about_copyright_tv"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/str_website"
+            android:textColor="@color/uspace_textColorSecondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/about_copyright_tv"
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/uspace_textColorSecondary"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+</RelativeLayout>
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="USpaceToolBar">
+
+        <!--<attr name="rightButtonIcon" format="reference"/>-->
+        <!--<attr name="isShowSearchView" format="boolean"/>-->
+
+        <!--<attr name="percent_circle_radius" format="dimension" />&lt;!&ndash;圆形半径&ndash;&gt;-->
+        <!--<attr name="percent_circle_progress" format="integer" />&lt;!&ndash;当前进度值&ndash;&gt;-->
+        <!--<attr name="percent_progress_color" format="color" />&lt;!&ndash;进度显示颜色&ndash;&gt;-->
+        <!--<attr name="percent_background_color" format="color" />&lt;!&ndash;圆形背景色&ndash;&gt;-->
+        <attr name="center_title" format="string" /><!--中心标题-->
+    </declare-styleable>
+</resources>

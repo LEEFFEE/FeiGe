@@ -1,4 +1,344 @@
 <resources>
     <string name="app_name">FeiGe</string>
     <string name="action_settings">Settings</string>
+    <string name="msg_suggestion_hint">使用云盘有问题？对云盘有建议？有什么问题和建议，就在这里提出来吧~</string>
+    <string name="str_copyright">Copyright © {0} feige. All Rights Reserved.</string>
+    <string name="template_user_agent" translatable="false">"%1$s/%2$s(Linux; Android)"</string>
+
+    <string name="pull_to_refresh_pull_label">下拉可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开可以刷新</string>
+    <string name="pull_to_refresh_refreshing_label">加载中...</string>
+    <string name="pull_to_refresh_tap_label">点击刷新</string>
+
+
+    <string name="load_data_error">数据加载失败</string>
+
+    <string name="strInputAccHint"> 输入帐号</string>
+    <string name="strInputPwdHint"> 输入密码</string>
+    <string name="strAccInputLabel">帐号</string>
+    <string name="strPswInputLabel">密码</string>
+    <string name="login">登 录</string>
+    <string name="register">注  册</string>
+    <string name="strFindPassword">找回密码</string>
+
+    <string name="logining">正在验证身份，请稍后...</string>
+    <string name="login_account_error">账号错误</string>
+    <string name="login_account_empty_error">请输入账号</string>
+    <string name="pwd_error">密码错误</string>
+    <string name="pwd_empty_error">请输入密码</string>
+    <string name="login_failure">登录失败</string>
+
+    <string name="new_msg">新建信息</string>
+    <string name="list_msg">信息箱</string>
+    <string name="readed_msg">已读通知</string>
+    <string name="not_read_msg">未读通知</string>
+    <string name="published_msg">我的发布</string>
+    <string name="msg_detail">信息详情</string>
+    <string name="menu_not_read_msg">未 读</string>
+    <string name="menu_readed_msg">已 读</string>
+    <string name="menu_published_msg">已发布</string>
+
+    <string name="new_comment">新建评论</string>
+
+    <string name="user_center">我的资料</string>
+    <string name="str_easytalk">动态信息</string>
+    <string name="net_disk">云   盘</string>
+    <string name="task_manager">任务管理</string>
+
+    <string name="strRegisterNewUser">注册新用户</string>
+    <string name="strLoginAccount">登录帐号</string>
+    <string name="strOldPwd">旧密码</string>
+    <string name="strNewPwd">新密码</string>
+    <string name="strPassword">密码</string>
+    <string name="strPasswordConfirm">密码确认</string>
+    <string name="strNextStep">下一步</string>
+    <string name="strName">姓名</string>
+    <string name="strIdentity">身份</string>
+    <string name="strMobile">手机号</string>
+    <string name="strEmail">邮箱</string>
+    <string name="strCampus">学校</string>
+    <string name="strProfession">专业</string>
+    <string name="strGrade">年级</string>
+    <string name="strSex">性别</string>
+    <string name="strMale">男</string>
+    <string name="strFemale">女</string>
+    <string name="strAge">年龄</string>
+    <string name="strBirthday">出生日期</string>
+    <string name="strRegister">注册</string>
+    <string name="strPrevStep">上一步</string>
+    <string name="strTeacher">教师</string>
+    <string name="strStudent">学生</string>
+    <string name="strAgreement">同意该条款</string>
+    <string name="strAgreementTitle">服务条款</string>
+    <string name="strOk">确认</string>
+    <string name="strCancel">取消</string>
+    <string name="strModify">修改</string>
+    <string name="strPostDialogTitle">请稍等片刻...</string>
+    <string name="strPostDialogBody">正在提交数据...</string>
+    <string name="please_wating">请稍后...</string>
+    <string name="loading">正在加载数据，请稍后...</string>
+    <string name="strUserInfo">个人信息</string>
+    <string name="strModifyPwd">修改密码</string>
+    <string name="msg_title_hint">标题</string>
+    <string name="msg_content_hint">内容</string>
+    <string name="msg_label_you_can_type_suffix">字</string>
+    <string name="msg_label_go_back">返回</string>
+    <string name="msg_label_send">发送</string>
+    <string name="strChooseAttach">选择附件</string>
+    <string name="strImgLib">图片库</string>
+    <string name="strSdcard">其他文件</string>
+    <string name="strMenu">菜单</string>
+    <string name="strShareFile">共享文件</string>
+    <string name="strMyFile">我的文件</string>
+    <string name="strBackToParent">返回上一级</string>
+    <string name="strUsedSpace">已用空间</string>
+    <string name="strTotalSpace">总空间</string>
+    <string name="strModifyUserInfo">修改个人信息</string>
+    <string name="strAddAttachment">添加附件</string>
+    <string name="dialog_title_login_uspace">登录Yopan</string>
+    <string name="strCapability">容量</string>
+    <string name="dialog_title_prompt">提示</string>
+    <string name="menu_title_file_opt">文件操作</string>
+    <string name="menu_title_folder_opt">文件夹操作</string>
+    <string name="menu_title_new_folder">新建目录</string>
+    <string name="menu_title_rename">重命名</string>
+    <string name="menu_title_refresh">刷新</string>
+    <string name="menu_title_upload">上传</string>
+    <string name="menu_title_task_manager">传输管理</string>
+    <string name="menu_title_upload_file">上传文件</string>
+    <string name="menu_title_open_file">打开文件</string>
+    <string name="menu_title_download_file">下载文件</string>
+    <string name="menu_title_delete_file">删除文件</string>
+    <string name="menu_title_publish_file">外链分享</string>
+    <string name="menu_title_publish_folder">共享文件夹</string>
+    <string name="menu_title_unpublish_file">取消分享</string>
+    <string name="menu_title_delete_folder">删除文件夹</string>
+    <string name="menu_title_usage">查看使用空间</string>
+    <string name="menu_title_dropbox_setting">网盘设置</string>
+    <string name="menu_title_dropbox_camera">拍照上传</string>
+    <string name="menu_title_back_to_main">返回主页</string>
+    <string name="menu_title_quit">退出</string>
+    <string name="menu_title_search">搜索</string>
+    <string name="menu_title_move_file">移动到</string>
+    <string name="menu_title_clear_list">清空列表</string>
+
+    <string name="hint_new_folder">请输入新建文件夹的名称</string>
+
+    <string name="msg_uspace_capability">共 {0}, {1}已用, {2}可用</string>
+    <string name="title_register_success">注册成功</string>
+    <string name="msg_register_success_email">注册成功，激活邮件已经发送到您的邮箱！</string>
+    <string name="msg_change_password_success">修改密码成功！</string>
+    <string name="msg_change_password_uspace_failed">修改教育云密码成功，网盘密码失败[网盘密码与教育云密码不一致]！</string>
+    <string name="msg_quit_confirm">真的要退出吗？</string>
+    <string name="msg_modify_userinfo_success">修改个人信息成功！</string>
+    <string name="msg_login_to_uspace">登录到友盘</string>
+    <string name="msg_uspace_list_directory">正在更新目录...</string>
+    <string name="msg_uspace_make_dir">正在创建目录...</string>
+    <string name="msg_uspace_delete_file">正在删除文件（夹）...</string>
+    <string name="msg_uspace_delete_file_confirm">真的要删除此文件吗？</string>
+    <string name="msg_uspace_delete_file_success">删除[{0}]成功！</string>
+    <string name="msg_uspace_publish_file">正在共享文件...</string>
+    <string name="msg_uspace_unpublish_file">正在取消共享文件...</string>
+    <string name="msg_uspace_publish_file_success">共享文件[{0}]成功！</string>
+    <string name="msg_uspace_unpublish_file_success">取消共享文件[{0}]成功！</string>
+    <string name="msg_uspace_delete_confirm">确定要删除吗？</string>
+    <string name="msg_uspace_unpublish_file_confirm">真的要取消共享此文件(夹)吗？</string>
+    <string name="msg_uspace_publish_file_confirm">真的要共享此文件吗？</string>
+    <string name="msg_uspace_download_file_confirm">确定下载文件吗？</string>
+    <string name="msg_uspace_download_file_exceed_threshold_confirm">此文件大小为{0}，真的要下载吗？</string>
+    <string name="msg_uspace_download_file_completed">下载[{0}]完成！</string>
+    <string name="msg_uspace_cannot_open_file">不可以打开文件[{0}]</string>
+    <string name="msg_uspace_file_not_download_over">文件未下载完成，请稍后...</string>
+    <string name="msg_uspace_file_download_exception">文件未正确下载,不能打开！</string>
+    <string name="please_install_support_soft">不支持打开该格式！</string>
+    <string name="msg_uspace_share_unshared_file_to_weibo_confirm">分享文件到微博之前必须要先共享该文件，是否继续分享？</string>
+    <string name="msg_uspace_download_file_before_open">打开文件前先要下载此文件，是否要下载？</string>
+    <string name="msg_uspace_upload_file_success">上传文件[{0}]成功！</string>
+    <string name="msg_send_msg_success">发送消息[{0}]成功！</string>
+    <string name="cmt_send_cmt_success">发布评论成功！</string>
+    <string name="msg_relogin_uspace_for_token">Token已过期，重新登录到Yopan...</string>
+    <string name="msg_uspace_downfile_replace_confirm">此文件已经存在，文件大小为{0}，是否要覆盖?</string>
+    <string name="msg_uspace_make_dir_success">创建目录[{0}]成功！</string>
+    <string name="msg_ecloud_user_login_invalid">登录超时，请重新登录！</string>
+    <string name="msg_ecloud_del_msg_confirm">真的要删除该信息?</string>
+    <string name="msg_add_file_into_download_task">文件{0}已加入到下载任务!</string>
+    <string name="msg_add_file_into_upload_task">文件{0}已加入到上传任务！</string>
+    <string name="msg_add_multy_file_into_download_task">{0}。。。等{1}个文件已加入到下载任务!</string>
+    <string name="msg_add_multy_file_into_upload_task">{0}...等{1}个文件已加入到上传任务！</string>
+    <string name="msg_file_exist_in_download_task">下载任务中已存在文件{0}！</string>
+    <string name="msg_file_exist_in_upload_task">上传任务中已存在文件{0}！</string>
+    <string name="msg_uspace_upload_file_exist_current_path_confirm">目标路径已经存在同命文件：{0},是否覆盖上传？</string>
+
+    <string name="error_add_img_attachment_failed">文件格式不正确，添加图片附件失败！</string>
+    <string name="error_upload_img_file_failed">文件格式不正确，上传图片失败！</string>
+    <string name="error_password_empty">密码不可以为空！</string>
+    <string name="error_campus_empty">校园不可以为空！</string>
+    <string name="error_profession_empty">专业不可以为空！</string>
+    <string name="error_grade_empty">年级不可以为空！</string>
+    <string name="error_name_empty">姓名不可以为空！</string>
+    <string name="error_nickname_empty">昵称不可以为空！</string>
+    <string name="error_nickname_exceed_20">昵称不可以超过20字符！</string>
+    <string name="error_login_account_empty">帐号不可为空！</string>
+    <string name="error_password_validation">密码由6-12位的数字或者字母组成！</string>
+    <string name="error_name_validation">姓名由1-10位的英文、中文字符组成！</string>
+    <string name="error_nickname_validation">昵称由1-12位的英文、中文字符组成！</string>
+    <string name="error_login_account_exceed_20">账号不可以超过20字符！</string>
+    <string name="error_login_account_exceed_50">账号不可以超过50字符！</string>
+    <string name="error_email_empty">邮箱不可以为空！</string>
+    <string name="error_email_validation">邮箱格式不正确！</string>
+    <string name="error_mobile_empty">手机号码不可以为空！</string>
+    <string name="error_mobile_validation">手机号码格式不正确！</string>
+    <string name="error_password_unmatched">输入的两次密码不匹配！</string>
+    <string name="error_old_pwd_empty">旧密码不可为空！</string>
+    <string name="error_message_title_empty">消息的标题不可为空！</string>
+    <string name="error_message_content_empty">消息的内容不可为空！</string>
+    <string name="error_comment_content_empty">评论的内容不可为空！</string>
+    <string name="error_message_title_length_exceed">消息的标题不可以超过{0}字符！</string>
+    <string name="error_message_content_length_exceed">消息的内容不可以超过{0}字符！</string>
+    <string name="error_comment_content_length_exceed">评论的内容不可以超过{0}字符</string>
+    <string name="error_message_attachment_size_exceed">附件[{0}]的大小[{1}]超过最大限制[{2}]！</string>
+    <string name="error_message_attachment_total_size_exceed">附件的总大小为[{0}],超过了最大限制[{1}]!</string>
+    <string name="error_message_attachment_empty">附件[{0}]的大小为0B！</string>
+    <string name="error_folder_name_empty">文件夹名称不可以为空！</string>
+
+    <string name="attachment">附件</string>
+    <string name="file_not_exist">文件不存在！</string>
+
+    <!-- tilte -->
+    <string name="find_pwd_title">找回密码</string>
+
+    <!-- util -->
+    <string name="month">月</string>
+    <string name="day">日</string>
+
+    <!-- message -->
+    <string name="sender_name">月</string>
+    <string name="send_time">日</string>
+    <string name="loading_more">更多...</string>
+    <string name="already_delete">已成功删除</string>
+    <string name="set_readed">移到已读</string>
+    <string name="set_delete">删除</string>
+
+    <!-- attachment -->
+    <string name="attacment_is_cover">文件已存在是否覆盖？</string>
+    <string name="downloading">正在下载文件，请稍后...</string>
+    <string name="downing">正在下载...</string>
+    <string name="attacment_already_download">文件已下载到SD卡</string>
+
+    <!-- system-->
+    <string name="developing">此功能正在开发中</string>
+    <string name="sdcard_not_available">SDCard 不可用</string>
+    <string name="admin_not_login_client">请用浏览器登录系统后台管理！</string>
+    <string name="email_sended">邮件已发送，请登录邮箱查看新密码。</string>
+    <string name="get_pwd">获取密码</string>
+    <string name="network_not_available">网络不可用，请检查网络！</string>
+    <string name="set_network">设置网络</string>
+
+    <!-- 文件下载、上传 -->
+    <string name="download_service_stop">停止下载任务</string>
+    <string name="download_service_run">启动下载任务</string>
+    <string name="service_stop_error">任务管理停止异常</string>
+    <string name="download_path">下载路径</string>
+    <string name="download_button">下载</string>
+    <string name="download_cancel">取消</string>
+    <string name="download_wait">等待中...</string>
+    <string name="download_sdcarderror">SDCard不存在或者写保护</string>
+    <string name="download_success">下载完成</string>
+    <string name="download_error">下载失败</string>
+    <string name="already_download">已下载</string>
+    <string name="task_mng_no_task">没有下载任务。</string>
+    <string name="task_mng_no_task2">没有上传任务。</string>
+    <string name="msg_download_quit_confirm">取消下载 ？</string>
+    <string name="msg_upload_quit_confirm">取消上传 ？</string>
+    <string name="msg_download_record_delete_confirm">删除下载记录 ？</string>
+    <string name="msg_upload_record_delete_confirm">删除上传记录？</string>
+    <string name="quit_service">退出时停止传输中的进程</string>
+
+    <string name="wb_main_at">/@我</string>
+    <string name="wb_main_comment">评论</string>
+    <string name="wb_main_message">私信</string>
+    <string name="wb_main_home">首页</string>
+    <string name="wb_main_news">信息</string>
+    <string name="wb_main_my_info">我的资料</string>
+    <string name="menu_search">搜索</string>
+    <string name="more">更多</string>
+
+    <string name="uspace_my_files_list">我的文件</string>
+    <string name="uspace_shared_files_list">共享列表</string>
+    <string name="uspace_search_files">文件搜索</string>
+    <string name="uspace_file_trx">传输列表</string>
+
+    <string name="str_friends">好友关注</string>
+    <string name="str_app_center">应用中心</string>
+    <string name="str_gps">定位系统</string>
+
+    <string name="sdcard_space_left_not_enough">SD卡剩余空间不足！</string>
+    <string name="str_source">来自：{0}</string>
+
+    <string name="main_reload">刷新</string>
+    <string name="forward">转发</string>
+    <string name="comment">评论</string>
+    <string name="itemmenu_bookmark">收藏</string>
+    <string name="weibo_content">微博正文</string>
+    <string name="str_new_weibo">发表新微博</string>
+    <string name="str_new_feedback">意见反馈</string>
+    <string name="str_new_comment">评论微博</string>
+    <string name="wb_content_hint">说点儿什么吧......</string>
+    <string name="weibo_comments">微博评论</string>
+    <string name="str_repost_weibo">转发微博</string>
+    <string name="msg_comments">信息评论</string>
+    <string name="str_weibo">微   博</string>
+    <string name="menu_title_share_to_weibo">微博分享</string>
+    <string name="str_share">分享</string>
+    <string name="itemmenu_delete">删除</string>
+    <string name="campus_msg">校园通知</string>
+    <string name="main_msg">通   知</string>
+    <string name="str_more_items">更多</string>
+    <string name="str_read_mode">浏览模式</string>
+    <string name="str_version">检查新版本</string>
+    <string name="str_about">关于</string>
+    <string name="msg_check_version">正在检测新版本，请稍后...</string>
+    <string name="msg_no_new_version">没有检测到新版本!</string>
+    <string name="str_clean_cache">清除缓存</string>
+    <string name="msg_clean_cache">您需要清除缓存（包括微博信息、校园通知、图片等）吗？</string>
+    <string name="msg_clean_cache_success">清除缓存成功！</string>
+    <string name="str_my_fans">我的粉丝</string>
+    <string name="str_my_attentions">我的关注</string>
+    <string name="str_search_friends">找朋友</string>
+    <string name="str_clear_list">清空队列</string>
+    <string name="msg_clear_list">确认清空队列吗？</string>
+    <string name="msg_clear_list_success">清空队列成功！</string>
+    <string name="msg_clear_list_not_allowed">有任务正在运行，不可以清空队列！</string>
+
+    <string name="error_age_validation">年龄必须在1-99之间！</string>
+    <string name="str_yes">是</string>
+    <string name="str_no">否</string>
+    <string name="str_preparing">正在准备数据</string>
+    <string name="str_logining">登录中...</string>
+    <string name="tmpl_space">已用{0},共{1}</string>
+    <string name="str_inc_signin">每日签到涨空间</string>
+    <string name="str_has_signined">今日已签到</string>
+    <string name="msg_sign_suc">签到成功！</string>
+    <string name="msg_confirm_logout">真的要注销吗？</string>
+    <string name="str_suggestion">意见反馈</string>
+    <string name="error_suggestion_content_empty">内容不可为空！</string>
+    <string name="msg_suggestion_success">发送意见反馈成功！</string>
+    <string name="str_website">www.feige.com</string>
+    <string name="msg_uspace_rename">正在重命名...</string>
+    <string name="my_groups">我的群组</string>
+
+    <string name="str_backup_auto">自动备份</string>
+    <string name="str_backup_dir">备份目录</string>
+    <string name="str_backup_wait">等待备份</string>
+    <string name="str_backup_running">正在备份...</string>
+    <string name="str_backup_finish">备份完成</string>
+    <string name="str_backup_failure">备份失败</string>
+
+    <!--xlistview相关-->
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
 </resources>

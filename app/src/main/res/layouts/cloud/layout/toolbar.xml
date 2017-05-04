@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/uspace_colorPrimary"
+    android:minHeight="@dimen/toolbar_height">
+
+    <ImageView
+        android:id="@+id/toolbar_left_image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/selector_go_back"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/toolbar_left_second_image_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/toolbar_left_image_iv"
+        android:background="@mipmap/ic_launcher"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/toolbar_center_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="网盘"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"/>
+
+    <FrameLayout
+        android:id="@+id/toolbar_right_control_fl"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/toolbar_right_image_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:id="@+id/toolbar_right_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@android:color/white"
+            />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/toolbar_right_second_image_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/toolbar_right_control_fl"
+        android:background="@mipmap/ic_launcher"
+        android:visibility="gone"/>
+</RelativeLayout>

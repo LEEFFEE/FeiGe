@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <cn.leeffee.feige.widget.ViewPagerFixed
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"/>
+    <RadioGroup
+        android:id="@+id/main_rg"
+        android:layout_width="match_parent"
+        android:layout_height="55dip"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/main_my_files_rb"
+            style="@style/tab_bottom"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_my_files"
+            android:tag="0"
+            android:text="我的文件"/>
+        <RadioButton
+            android:id="@+id/main_my_group_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_my_group"
+            android:tag="1"
+            android:text="我的群组"/>
+
+        <RadioButton
+            android:id="@+id/main_file_trans_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_file_trans"
+            android:tag="2"
+            android:text="文件传输"/>
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/main_file_search_rb"-->
+            <!--style="@style/tab_bottom"-->
+            <!--android:drawableTop="@drawable/selector_file_search"-->
+            <!--android:tag="3"-->
+            <!--android:text="文件搜索"/>-->
+
+        <RadioButton
+            android:id="@+id/main_more_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_more"
+            android:tag="3"
+            android:text="更多"/>
+    </RadioGroup>
+</LinearLayout>

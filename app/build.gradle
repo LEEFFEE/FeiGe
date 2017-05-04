@@ -1,30 +1,146 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.jakewharton.butterknife'
+def calendar = Calendar.getInstance();
+def time = String.format("%d%02d%02d%02d%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    //useLibrary 'org.apache.http.legacy'
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
     defaultConfig {
-        applicationId "cn.leeffee.feige"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"feige" ]
     }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent + "/${variant.buildType.name}",
+                    "feige-${variant.versionName}-$time-${variant.productFlavors[0].name}-${variant.buildType.name}.apk".toLowerCase())
+        }
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//        debug {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+    //签名
+    signingConfigs {
+        debug {
+            storeFile file("leeffee.jks")
+            storePassword "leeffee"                          //在生成.jks文件时需要填入的参数一一对应即可
+            keyAlias "leeffee"
+            keyPassword "leeffee"
+        }
+        relealse {
+            storeFile file("leeffee.jks")                 //Android Studio --> Build --> Generate Signed APK --> Create New 可以生成
+            storePassword "leeffee"                          //在生成.jks文件时需要填入的参数一一对应即可
+            keyAlias "leeffee"
+            keyPassword "leeffee"
+        }
+    }
+
     buildTypes {
-        release {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            // versionNameSuffix "-debug"
             minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //加载默认混淆配置文件 progudard-android.txt在sdk目录里面，不用管，proguard.cfg是我们自己配<span></span>的混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.relealse
+        }
+    }
+//    packagingOptions {
+//        exclude 'META-INF/DEPENDENCIES'
+//        //  exclude 'META-INF/NOTICE'
+//        exclude 'META-INF/LICENSE'
+//        // exclude 'META-INF/LICENSE.txt'
+//        // exclude 'META-INF/NOTICE.txt'
+//    }
+    lintOptions{
+        //lint 遇到 error 时继续 构建
+        abortOnError false
+        //build release 版本 时 开启lint 检测
+        checkReleaseBuilds false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
+    productFlavors {
+        feige {}
+//        _360 {}
+//        yingyongbao{}
+//        baidu {}
+//        baidu {
+//            manifestPlaceholders = [UMENG_CHANNEL: "baidu"]
+//        }
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [ UMENG_CHANNEL_VALUE:name ]
+    }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/cloud',
+                            'src/main/res/layouts/follow',
+                            'src/main/res/layouts/news',
+                            'src/main/res/layouts/player',
+                            'src/main/res/layouts/shop',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    compile 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.jcodecraeer:xrecyclerview:1.3.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     testCompile 'junit:junit:4.12'
 }

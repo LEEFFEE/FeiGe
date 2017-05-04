@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/uspace_colorPrimaryDark" android:state_pressed="true"></item><!-- 按下时的背景 -->
+    <item android:drawable="@color/uspace_colorPrimary"></item><!-- 默认 -->
+
+</selector>

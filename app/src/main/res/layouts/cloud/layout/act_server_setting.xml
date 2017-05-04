@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_server_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99ffffff"
+    tools:context=".ui.cloud.activity.SearchActivity">
+
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/server_setting_rl"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/toolbar_height"-->
+    <!--android:background="@color/toolbar_BgColor">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/cancel_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:text="取消"-->
+    <!--android:clickable="true"-->
+    <!--android:textSize="20sp"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="服务器设置"-->
+    <!--android:textSize="18sp"/>-->
+    <!--</RelativeLayout>-->
+
+    <cn.leeffee.feige.widget.USpaceToolBar
+        android:id="@+id/server_setting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_title="服务器设置"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/server_setting_toolbar"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/server_host_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="服务器地址"
+            android:textColor="@color/uspace_textColorSecondary"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/server_host_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/server_host_tv"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/qq_edit_login"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColor="@color/uspace_textColorSecondary"/>
+
+
+        <TextView
+            android:id="@+id/server_port_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/server_host_et"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="服务器端口"
+            android:textColor="@color/uspace_textColorSecondary"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/server_port_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/server_port_tv"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/qq_edit_login"
+            android:textColor="@color/uspace_textColorSecondary"/>
+
+        <Button
+            android:id="@+id/ok_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/server_port_et"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_login_bg"
+            android:text="确   定"
+            android:textColor="@color/uspace_textColor"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+</RelativeLayout>

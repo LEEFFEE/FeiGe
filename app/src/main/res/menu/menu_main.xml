@@ -1,9 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="cn.leeffee.feige.MainActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="cn.leeffee.feige.ui.follow.activity.MainActivity">
+    <item
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:title="@string/action_settings"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_share"
+        android:orderInCategory="100"
+        android:title="分享"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="never"/>
 </menu>

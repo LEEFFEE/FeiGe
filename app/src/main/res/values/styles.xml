@@ -1,17 +1,77 @@
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/uspace_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/uspace_colorPrimaryDark</item>
+        <item name="colorAccent">@color/uspace_colorAccent</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/uspace_textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/uspace_textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/uspace_textColorSecondary</item>
+        <item name="android:textColorHighlight">@color/uspace_textColorHighlight</item>
+        <item name="android:divider">@color/uspace_divider</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="tab_bottom">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@drawable/selector_tab_text_color</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <!--<style name="loading.30" parent="@android:style/Widget.ProgressBar">-->
+    <!--<item name="android:minWidth">30dip</item>-->
+    <!--<item name="android:maxWidth">30dip</item>-->
+    <!--<item name="android:minHeight">30dip</item>-->
+    <!--<item name="android:maxHeight">30dip</item>-->
+    <!--</style>-->
+
+    <style name="dialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <!--<item name="android:windowFrame">@null</item>&lt;!&ndash;边框 &ndash;&gt;-->
+        <!--<item name="android:windowIsFloating">true</item>&lt;!&ndash;是否浮现在activity之上 &ndash;&gt;-->
+        <!--<item name="android:windowIsTranslucent">false</item>&lt;!&ndash;半透明 &ndash;&gt;-->
+        <!--<item name="android:windowNoTitle">true</item>&lt;!&ndash;无标题 &ndash;&gt;-->
+        <!--<item name="android:windowBackground">@color/transparent</item>&lt;!&ndash;背景透明 &ndash;&gt;-->
+        <!--<item name="android:backgroundDimEnabled">true</item>&lt;!&ndash;背景模糊 &ndash;&gt;-->
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TopPopuWindowAnimationShow">
+        <item name="android:windowEnterAnimation">@anim/top_enter</item>
+        <item name="android:windowExitAnimation">@anim/top_exit</item>
+    </style>
+    <style name="msg_tab_bottom">
+        <item name="android:textSize">@dimen/bottom_tab_font_size</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/msg_main_btn</item>
+        <item name="android:paddingTop">@dimen/msg_bottom_tab_padding_up</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+    <style name="tx_tab_top">
+        <item name="android:textSize">@dimen/bottom_tab_font_size</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/top_tab_selector</item>
+        <item name="android:paddingTop">@dimen/msg_bottom_tab_padding_up</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
 </resources>

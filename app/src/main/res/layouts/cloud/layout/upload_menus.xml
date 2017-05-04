@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#E4E4E4"
+              android:orientation="vertical">
+
+    <!--<TextView-->
+    <!--android:id="@+id/upload_menus_title_tv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="5dp"-->
+    <!--android:gravity="center"-->
+    <!--android:maxLines="1"-->
+    <!--android:text="请选择上传的文件类型"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:background="@color/toolbar_BgColor"-->
+    <!--android:textSize="20sp">-->
+    <!--</TextView>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/uspace_statusBar0.7">
+
+        <ImageView
+            android:id="@+id/upload_menus_cancel_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/upload_menus_gv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"
+        android:clickable="true"
+        android:focusable="false"
+        android:gravity="center"
+        android:horizontalSpacing="1dp"
+        android:listSelector="@drawable/fans_info_border"
+        android:numColumns="3"
+        android:verticalSpacing="1dp">
+    </GridView>
+
+</LinearLayout>

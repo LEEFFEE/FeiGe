@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/layout_backup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/listview_bg"
+                android:gravity="left"
+                android:paddingBottom="5dip"
+                android:paddingLeft="3dip"
+                android:paddingRight="2dip"
+                android:paddingTop="5dip">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_weight="2"
+        android:background="@drawable/listview_bg"
+        android:gravity="center"
+        android:paddingLeft="2dip"
+        android:paddingRight="3dip">
+
+        <ImageView
+            android:id="@+id/backupImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/backup_title"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linerLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dip"
+        android:layout_toRightOf="@id/relativeLayout1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/backup_dir_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="15dip"/>
+
+        <TextView
+            android:id="@+id/backup_complete_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#656565"
+            android:textSize="10dip"/>
+    </LinearLayout>
+</RelativeLayout>

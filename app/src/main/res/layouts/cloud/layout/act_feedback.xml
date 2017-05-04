@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feedback"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.leeffee.feige.ui.cloud.activity.FeedbackActivity">
+
+    <cn.leeffee.feige.widget.USpaceToolBar
+        android:id="@+id/feedback_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_title="意见反馈"/>
+    <EditText
+        android:id="@+id/feedback_et"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/qq_edit_login"
+        android:gravity="top"
+        android:hint="@string/msg_suggestion_hint"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:textSize="15dp"/>
+</LinearLayout>

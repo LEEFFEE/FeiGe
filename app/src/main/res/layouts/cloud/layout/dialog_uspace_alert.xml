@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <!--android:background="#ffffff"-->
+    <TextView
+        android:id="@+id/dialog_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/uspace_colorPrimary"
+        android:gravity="center"
+        android:text="新建文件夹"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="22sp"/>
+
+    <EditText
+        android:id="@+id/dialog_filename_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/qq_edit_login"
+        android:hint="请输入文件夹的名字"
+        android:maxLines="1">
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/dialog_ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:text="确定"/>
+
+        <Button
+            android:id="@+id/dialog_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="取消"/>
+    </LinearLayout>
+
+</LinearLayout>

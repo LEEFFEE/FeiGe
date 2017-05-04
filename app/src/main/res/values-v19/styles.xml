@@ -1,0 +1,17 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/uspace_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/uspace_colorPrimaryDark</item>
+        <item name="colorAccent">@color/uspace_colorAccent</item>
+
+        <item name="android:textColor">@color/uspace_textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/uspace_textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/uspace_textColorSecondary</item>
+        <item name="android:textColorHighlight">@color/uspace_textColorHighlight</item>
+        <item name="android:divider">@color/uspace_divider</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+</resources>

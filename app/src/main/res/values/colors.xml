@@ -3,4 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--自定义主题-->
+    <color name="uspace_colorPrimary">#00BCD4</color>
+    <color name="uspace_colorPrimaryDark">#0097A7</color>
+    <color name="uspace_colorAccent">#03A9F4</color>
+
+    <color name="uspace_textColorPrimary">#212121</color>
+    <color name="uspace_textColorSecondary">#757575</color>
+    <color name="uspace_textColorHighlight">#B2EBF2</color>
+    <color name="uspace_textColor">#FFFFFF</color>
+    <color name="uspace_divider">#BDBDBD</color>
+
+    <!--状态栏0.7之后的颜色-->
+    <color name="uspace_statusBar0.7">#008394</color>
+    <color name="uspace_dark_gray">#99ffffff</color>
 </resources>

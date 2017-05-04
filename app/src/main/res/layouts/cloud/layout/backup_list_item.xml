@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/listview_bg">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_weight="1.0"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="8dip"
+            android:paddingTop="8dip">
+
+            <TextView
+                android:id="@+id/backup_list_item_dir_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:text="目录名1"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/backup_list_item_dir_path_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/backup_list_item_dir_name_tv"
+                android:layout_marginTop="5dip"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:text="/mnt/sdcard/tmp"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/backup_list_item_backup_status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/backup_list_item_dir_path_tv"
+                android:layout_marginTop="5dip"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:text="@string/str_backup_wait"
+                android:textColor="#3399FF"
+                android:textSize="14sp"/>
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_backup_running"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tv_backup_dirname"-->
+            <!--android:layout_marginTop="5dip"-->
+            <!--android:ellipsize="middle"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/str_backup_running"-->
+            <!--android:textColor="#00FF33"-->
+            <!--android:textSize="14sp"-->
+            <!--android:visibility="gone"/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_backup_finish"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tv_backup_dirname"-->
+            <!--android:layout_marginTop="5dip"-->
+            <!--android:ellipsize="middle"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/str_backup_finish"-->
+            <!--android:textColor="#C0C0C0"-->
+            <!--android:textSize="14sp"-->
+            <!--android:visibility="gone"/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_backup_failure"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tv_backup_dirname"-->
+            <!--android:layout_marginTop="5dip"-->
+            <!--android:ellipsize="middle"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/str_backup_failure"-->
+            <!--android:textColor="#CC0000"-->
+            <!--android:textSize="14sp"-->
+            <!--android:visibility="gone"/>-->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right">
+
+            <Button
+                android:id="@+id/backup_list_item_cancel_backup_btn"
+                android:layout_width="75dip"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_login_bg"
+                android:text="取消备份"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+
+            <Button
+                android:id="@+id/backup_list_item_again_backup_btn"
+                android:layout_width="75dip"
+                android:layout_height="30dp"
+                android:layout_below="@id/backup_list_item_cancel_backup_btn"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_login_bg"
+                android:text="重新备份"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

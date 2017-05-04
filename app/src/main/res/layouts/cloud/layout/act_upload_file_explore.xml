@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              android:weightSum="1">
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/toolbar_height"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="@mipmap/bar_x_head"-->
+        <!--android:gravity="center_vertical">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/upload_file_explore_home_iv"-->
+            <!--android:layout_width="85dip"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:src="@drawable/btn_root_selector"-->
+            <!--android:visibility="gone"/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/upload_file_explore_go_back_iv"-->
+            <!--android:layout_width="40dip"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:src="@drawable/selector_go_back"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="本地文件"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="18sp"/>-->
+    <!--</RelativeLayout>-->
+
+    <cn.leeffee.feige.widget.USpaceToolBar
+        android:id="@+id/upload_file_explore_toolbar"
+        app:center_title="本地文件"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/upload_file_explore_current_local_path_tv"
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:background="#f4f4f4"
+        android:ellipsize="middle"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="2.0dip"
+        android:text="/sdcard/xxx/s//sd/s/"
+        android:textColor="#292929"
+        android:textSize="15sp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/hover_line"/>
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/upload_file_explore_ll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_weight="1.0"-->
+    <!--android:background="@android:color/white"-->
+    <!--android:orientation="vertical"></LinearLayout>-->
+    <FrameLayout
+        android:id="@+id/upload_file_explore_fl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="vertical"/>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_weight="1"
+        android:background="#dedede"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="67dip"
+        android:layout_gravity="bottom"
+        android:background="#f4f4f4"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/upload_file_explore_upload_menus"
+            android:layout_weight="1"
+            android:background="#dedede"/>
+
+        <LinearLayout
+            android:id="@+id/upload_file_explore_upload_menus"
+            android:layout_width="fill_parent"
+            android:layout_height="42dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="#f4f4f4"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/upload_file_explore_select_all_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="3dip"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="3dip"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_blue_selector"
+                android:text="全选"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/upload_file_explore_change_path_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="3dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="3dip"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_login_bg"
+                android:text="更改目录"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/upload_file_explore_upload_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="3dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="3dip"
+                android:layout_marginTop="3dip"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_blue_selector"
+                android:focusable="false"
+                android:text="上传"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/upload_file_explore_upload_path_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/upload_file_explore_upload_menus"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="3dip"
+            android:ellipsize="marquee"
+            android:gravity="left|center_vertical"
+            android:lines="1"
+            android:text="上传目录：/我的云盘/"
+            android:textColor="@android:color/black"
+            android:textSize="12dip"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="3dp"
+              android:background="@drawable/listview_bg"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/group_log_message_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:maxLines="2"
+        android:minLines="1"
+        android:text="loginfo"
+        android:textColor="@android:color/black"/>
+
+
+    <TextView
+        android:layout_marginTop="3dp"
+        android:id="@+id/group_log_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-09-24 13:33:30"
+        android:textColor="#656565"
+        android:textSize="10sp"/>
+</LinearLayout>

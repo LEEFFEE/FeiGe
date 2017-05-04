@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f4f4f4"
+        android:orientation="vertical"
+        >
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_header_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/toolbar_height"-->
+        <!--android:background="@mipmap/bar_x_head"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingLeft="15dp"-->
+        <!--android:text="优盘"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="20sp"/>-->
+        <!--</LinearLayout>-->
+
+        <cn.leeffee.feige.widget.USpaceToolBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_gravity="center_vertical"
+            app:center_title="@string/app_name"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="271dp"
+                android:layout_height="182dp"
+                android:layout_marginTop="10dip"
+                android:src="@mipmap/ic_launcher"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip">
+
+            <EditText
+                android:id="@+id/login_account_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/qq_edit_login"
+                android:hint="输入帐号"
+                android:maxLines="1"
+                android:paddingLeft="70dp"
+                android:textColor="@color/uspace_textColorSecondary"/>
+
+            <EditText
+                android:id="@+id/login_pwd_et"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignLeft="@id/login_account_et"
+                android:layout_alignRight="@id/login_account_et"
+                android:layout_below="@id/login_account_et"
+                android:layout_marginRight="1.0dip"
+                android:background="@drawable/qq_edit_login"
+                android:hint="输入密码"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:paddingLeft="70dp"
+                android:saveEnabled="true"
+                android:textColor="@color/uspace_textColorSecondary"/>
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/login_account_et"
+                android:layout_alignBottom="@id/login_account_et"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="7dp"
+                android:text=" 帐   号"
+                android:textColor="@color/uspace_textColorSecondary"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/login_pwd_et"
+                android:layout_alignBottom="@id/login_pwd_et"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="7dp"
+                android:text=" 密   码"
+                android:textColor="@color/uspace_textColorSecondary"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="5dip"
+            android:paddingLeft="3dip"
+            android:paddingRight="3dip">
+
+            <Button
+                android:id="@+id/login_login_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_login_bg"
+                android:text="登    录"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"></Button>
+            <!--
+        <Button android:layout_height="wrap_content" android:id="@+id/btn_register"
+            android:layout_toRightOf="@+id/login_btn_login" android:layout_marginLeft="16dip"
+            android:layout_marginTop="7.0px" android:text="注   册"
+            android:textColor="@android:color/white" android:layout_width="200px"
+            android:background="@drawable/btn_login_bg" android:textSize="20sp"></Button>
+             -->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/login_server_setting_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="服务器设置"
+                android:textColor="@drawable/selector_text_color"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

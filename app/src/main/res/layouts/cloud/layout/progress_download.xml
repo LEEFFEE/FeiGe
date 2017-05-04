@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listview_bg"
+    android:orientation="horizontal"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/download_progress_filename_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:text="文件名文件名文件名文件名文件名文件名文件名文件名文件名文件名文件名文件名文件名"
+            android:textColor="#000000"/>
+
+        <RelativeLayout
+            android:id="@+id/download_progress_center_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/listview_bg">
+
+            <ProgressBar
+                android:id="@+id/download_progress_pb"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_centerVertical="true"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_bg"
+                android:secondaryProgress="100"/>
+
+            <TextView
+                android:id="@+id/download_progress_percentage_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="100% 完成"
+                android:textColor="@color/uspace_colorPrimaryDark"
+                android:textSize="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/download_progress_complete_size_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="1.5M/3.8M"
+                android:textColor="#656565"
+                android:textSize="10dip"/>
+
+            <TextView
+                android:id="@+id/download_progress_add_queue_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="12月02日 08:24:30"
+                android:textColor="#656565"
+                android:textSize="10dip"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/download_progress_cancel_btn"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="3dp"
+        android:background="@drawable/btn_style_delete"
+        android:focusable="false"
+        android:visibility="visible"/>
+</LinearLayout>
