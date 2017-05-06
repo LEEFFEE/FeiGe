@@ -38,6 +38,7 @@ public class SplashActivity extends BasicActivity {
             case R.id.splash_player:
                 break;
             case R.id.splash_shop:
+                mClass = cn.leeffee.feige.ui.shop.activity.MainActivity.class;
                 break;
         }
     }

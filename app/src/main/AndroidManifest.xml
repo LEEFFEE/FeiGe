@@ -28,12 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.follow.activity.MainActivity"/>
-        <activity android:name=".ui.cloud.activity.LoginActivity"/>
+
         <activity
             android:name=".ui.cloud.activity.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".ui.cloud.activity.LoginActivity"/>
         <activity android:name=".ui.cloud.activity.ServerSettingActivity"/>
         <activity android:name=".ui.cloud.activity.UploadFileExploreActivity"/>
         <activity android:name=".ui.cloud.activity.FeedbackActivity"/>
@@ -54,5 +53,18 @@
             android:name=".ui.cloud.service.BackupService"
             android:enabled="true"
             android:exported="true"/>
+
+        <activity
+            android:name=".ui.follow.activity.MainActivity"
+            android:theme="@style/ShopTheme"/>
+        <activity
+            android:name=".ui.shop.activity.MainActivity"
+            android:theme="@style/ShopTheme"/>
+        <activity
+            android:name=".ui.shop.activity.WareListActivity"
+            android:theme="@style/ShopTheme"/>
+        <activity
+            android:name=".ui.shop.activity.WareDetailActivity"
+            android:theme="@style/ShopTheme"/>
     </application>
 </manifest>

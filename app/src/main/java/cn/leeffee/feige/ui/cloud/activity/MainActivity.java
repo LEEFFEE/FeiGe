@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
 
     @Override
     public int getLayoutId() {
-        return R.layout.act_main;
+        return R.layout.act_cloud_main;
     }
 
     @Override

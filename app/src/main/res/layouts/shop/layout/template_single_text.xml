@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@drawable/selector_list_item"
+
+    >
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/textView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="电子产品"
+        android:textSize="18sp"
+        android:textColor="@color/darkgrey"
+
+         />
+
+</LinearLayout>

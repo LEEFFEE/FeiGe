@@ -1,8 +1,11 @@
 package cn.leeffee.feige.base;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,13 +14,20 @@ import java.io.PrintStream;
 /**
  * APPLICATION
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     private static BaseApplication baseApplication;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
         baseApplication = this;
         Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override

@@ -25,7 +25,7 @@ ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.2"
     applicationId = "cn.leeffee.feige"
-    minSdkVersion = 14
+    minSdkVersion = 15
     targetSdkVersion = 22
     versionCode = 5
     versionName = "v2.1"

@@ -14,7 +14,6 @@ public class App extends BaseApplication {
     public static final String TAG = "USpaceApplication";
 
     public static IDownloadService downloadService;
-
     public static IUploadService uploadService;
 
     public static IBackupService backupService;

@@ -1,5 +1,7 @@
 package cn.leeffee.feige.base;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
@@ -31,7 +33,21 @@ public abstract class BasicLazyFragment extends Fragment implements FragmentBack
             onInvisible();
         }
     }
-
+    /**
+     * 如果是通过FragmentTransaction的show和hide的方法来控制显示，调用的是onHiddenChanged.
+     * 若是初始就show的Fragment 为了触发该事件 需要先hide再show
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
     protected void onVisible() {
         lazyLoad();
     }
@@ -42,13 +58,53 @@ public abstract class BasicLazyFragment extends Fragment implements FragmentBack
     }
 
     /**
-     *Fragment回退键拦截， 默认不拦截
-     * @return 是否拦截 默认false；
+     * Fragment回退键拦截， 默认不拦截
+     *
      * @param keyCode
      * @param event
+     * @return 是否拦截 默认false；
      */
     @Override
     public boolean onBackForward(int keyCode, KeyEvent event) {
         return false;
+    }
+
+    /**
+     * 通过Class跳转界面
+     **/
+    public void startActivity(Class<?> cls) {
+        startActivity(cls, null);
+    }
+
+    /**
+     * 通过Class跳转界面
+     **/
+    public void startActivityForResult(Class<?> cls, int requestCode) {
+        startActivityForResult(cls, null, requestCode);
+    }
+
+    /**
+     * 含有Bundle通过Class跳转界面
+     **/
+    public void startActivityForResult(Class<?> cls, Bundle bundle,
+                                       int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 含有Bundle通过Class跳转界面
+     **/
+    public void startActivity(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
     }
 }
