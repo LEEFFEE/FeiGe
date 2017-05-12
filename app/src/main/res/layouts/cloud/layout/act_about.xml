@@ -1,86 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/ic_launcher"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <!--<RelativeLayout-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="47dp"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:background="@drawable/bar_x_head"-->
-    <!--android:gravity="center_vertical">-->
+    <cn.leeffee.feige.widget.USpaceToolBar
+        android:id="@+id/about_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        app:center_title="关于软件"/>
 
     <!--<ImageView-->
-    <!--android:id="@id/btn_back"-->
-    <!--android:layout_width="40dip"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:src="@drawable/wb_back_selector"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@id/wb_header_tv"-->
+    <!--android:id="@+id/about_back_iv"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:text="关于"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="18sp"/>-->
-    <!--</RelativeLayout>-->
+    <!--android:layout_margin="5dp"-->
+    <!--/>-->
 
-    <!--<com.uit.uspace.widget.USpaceToolBar-->
-    <!--android:id="@+id/about_toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:center_title="关于"/>-->
-
-    <ImageView
-        android:id="@+id/about_back_iv"
-        android:layout_margin="5dp"
-        android:background="@drawable/selector_go_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="160dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--<TextView-->
+            <!--android:id="@+id/about_app_name_tv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="20dip"-->
+            <!--android:gravity="center"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="@string/app_name"-->
+            <!--android:textColor="@color/uspace_textColorSecondary"-->
+            <!--android:textSize="18sp"/>-->
 
         <TextView
             android:id="@+id/about_version_tv"
             android:layout_width="match_parent"
-            android:layout_height="20dip"
-            android:layout_above="@+id/about_website_tv"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="1"
-            android:text="Yopan 1.0 beta"
+            android:text="uspace 2.5"
             android:textColor="@color/uspace_textColorSecondary"
-            android:textSize="12sp"/>
+            android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/about_website_tv"
-            android:layout_width="match_parent"
-            android:layout_height="20dip"
-            android:layout_above="@+id/about_copyright_tv"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/str_website"
-            android:textColor="@color/uspace_textColorSecondary"
-            android:textSize="12sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/about_website_tv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="@string/str_website"-->
+            <!--android:textColor="@color/uspace_textColorSecondary"-->
+            <!--android:textSize="12sp"/>-->
 
-        <TextView
-            android:id="@+id/about_copyright_tv"
-            android:layout_width="match_parent"
-            android:layout_height="20dip"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textColor="@color/uspace_textColorSecondary"
-            android:textSize="10sp"/>
-    </RelativeLayout>
-</RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/about_copyright_tv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:maxLines="1"-->
+            <!--android:text="@string/str_copyright"-->
+            <!--android:textColor="@color/uspace_textColorSecondary"-->
+            <!--android:textSize="12sp"/>-->
+    </LinearLayout>
+</LinearLayout>
 

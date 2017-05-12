@@ -4,11 +4,17 @@ package cn.leeffee.feige.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import cn.leeffee.feige.utils.StatusBarCompat;
 import cn.leeffee.feige.utils.TUtil;
+
 
 /**
  * 基类
  */
+
+/***************
+ * 使用例子
+ *********************/
 public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends BasicActivity {
     public P mPresenter;
     public M mModel;
@@ -24,12 +30,12 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
         this.initPresenter();
         initToolBar();
         this.initView();
-//        if (Build.VERSION.SDK_INT >= 19) {
-//            //SetStatusBarColor(R.color.uspace_colorPrimary);
-//            SetTranslucentBar();
-//        }
-       // StatusBarUtil.setWindowStatusBarColor(this,R.color.uspace_colorPrimary);
-      // new SystemBarTintManager();
+        //        if (Build.VERSION.SDK_INT >= 19) {
+        //            //SetStatusBarColor(R.color.uspace_colorPrimary);
+        //            SetTranslucentBar();
+        //        }
+        // StatusBarUtil.setWindowStatusBarColor(this,R.color.uspace_colorPrimary);
+        // new SystemBarTintManager();
 
     }
 
@@ -50,6 +56,20 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
     public abstract void initView();
 
     /**
+     * 着色状态栏（4.4以上系统有效）
+     */
+    protected void SetStatusBarColor(int color) {
+        StatusBarCompat.setStatusBarColor(this, color);
+    }
+
+    /**
+     * 沉浸状态栏（4.4以上系统有效）
+     */
+    protected void SetTranslucentBar() {
+        StatusBarCompat.translucentStatusBar(this);
+    }
+
+    /**
      * 网络访问错误提醒
      */
     //    public void showNetErrorTip() {
@@ -58,25 +78,6 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
     //    public void showNetErrorTip(String error) {
     //        ToastUtil.showToastWithImg(error,R.drawable.ic_wifi_off);
     //    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //debug版本不统计crash
-        //        if(!BuildConfig.LOG_DEBUG) {
-        //            //友盟统计
-        //            MobclickAgent.onResume(this);
-        //        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //debug版本不统计crash
-        //        if(!BuildConfig.LOG_DEBUG) {
-        //            //友盟统计
-        //            MobclickAgent.onPause(this);
-        //        }
-    }
 
     @Override
     protected void onDestroy() {

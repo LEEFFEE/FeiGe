@@ -120,10 +120,12 @@ public class TopPopuWindow {
     }
 
     public void show() {
-        //TODO 注意：这里的 R.layout.activity_main，不是固定的。你想让这个popupwindow盖在哪个界面上面。就写哪个界面的布局。这里以主界面为例
-        popupWindow.showAtLocation(contentView,
-                Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-        // 设置背景半透明
-        backgroundAlpha(0.7f);
+        if (popupWindow != null && !popupWindow.isShowing()) {
+            //TODO 注意：这里的 R.layout.activity_main，不是固定的。你想让这个popupwindow盖在哪个界面上面。就写哪个界面的布局。这里以主界面为例
+            popupWindow.showAtLocation(contentView,
+                    Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+            // 设置背景半透明
+            backgroundAlpha(0.7f);
+        }
     }
 }

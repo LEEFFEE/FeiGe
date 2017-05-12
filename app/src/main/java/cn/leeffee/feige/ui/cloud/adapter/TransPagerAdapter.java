@@ -1,6 +1,6 @@
 package cn.leeffee.feige.ui.cloud.adapter;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +14,10 @@ import cn.leeffee.feige.ui.cloud.factory.PageFactory;
 
 //ViewPager适配器
 public class TransPagerAdapter extends PagerAdapter {
-    private Activity mAct;
+    private Fragment mFrag;
 
-    public TransPagerAdapter(Activity act) {
-        mAct = act;
+    public TransPagerAdapter(Fragment frag) {
+        mFrag = frag;
     }
 
     @Override
@@ -32,9 +32,8 @@ public class TransPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(PageFactory.createPage(position, mAct).getView());//添加页卡
-        PageFactory.createPage(position, mAct).initData();
-        return PageFactory.createPage(position, mAct).getView();
+        container.addView(PageFactory.createPage(position, mFrag).getView());//添加页卡
+        return PageFactory.createPage(position, mFrag).getView();
     }
 
     @Override
@@ -44,7 +43,7 @@ public class TransPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return PageFactory.createPage(position, mAct).getTitle();//页卡标题
+        return PageFactory.createPage(position, mFrag).getTitle();//页卡标题
     }
 
 }

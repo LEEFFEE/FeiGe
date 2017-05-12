@@ -25,45 +25,15 @@ public class PropertyUtil {
     private static Properties defaultProperty;
 
     private final static String PROPERTY_FILE = "feige.properties";
-    private static String app_server = "";
 
-    public static String getServer() {
-        if (TextUtils.isEmpty(SPUtil.getString(AppConfig.SERVER))) {
-            if (TextUtils.isEmpty(app_server)) {
-                app_server = defaultProperty.getProperty("feige.server");
-                SPUtil.putString(AppConfig.SERVER, app_server);
-            }
-        } else {
-            app_server = SPUtil.getString(AppConfig.SERVER);
-        }
-        if (!app_server.endsWith(File.separator)) {
-            app_server += File.separator;
-        }
-        return app_server;
-    }
-
-    public static void setServer(String server) {
-        PropertyUtil.app_server = server;
-    }
+    // public final static String PERSONAL_feige = "0";
+    //public final static String ENTERPRISE_feige = "1";
+    //   private static String app_server = "";
 
     static {
-        init();
-    }
-
-    static void init() {
         defaultProperty = new Properties();
         loadProperties(defaultProperty, PropertyUtil.class.getClassLoader().getResourceAsStream(PROPERTY_FILE));
     }
-
-    private static boolean loadProperties(Properties props, InputStream is) {
-        try {
-            props.load(is);
-            return true;
-        } catch (Exception ignore) {
-        }
-        return false;
-    }
-
     private static PropertyUtil single;
 
     public static PropertyUtil getInstance() {
@@ -74,13 +44,41 @@ public class PropertyUtil {
             return single;
         }
     }
+    public String getServer() {
+        if (TextUtils.isEmpty(SPUtil.getString(AppConfig.SERVER))) {
+            //            if (TextUtils.isEmpty(app_server)) {
+            //                app_server = defaultProperty.getProperty("feige.server");
+            //                SPUtil.putString(AppConfig.SERVER, app_server);
+            //            }
+            return defaultProperty.getProperty(AppConfig.SERVER);
+        } else {
+            return SPUtil.getString(AppConfig.SERVER);
+        }
+        //        if (!app_server.endsWith(File.separator)) {
+        //            app_server += File.separator;
+        //        }
+        //  return app_server;
+    }
 
+    //    public static void setServer(String server) {
+    //        PropertyUtil.app_server = server;
+    //    }
+
+
+    private static boolean loadProperties(Properties props, InputStream is) {
+        try {
+            props.load(is);
+            return true;
+        } catch (Exception ignore) {
+        }
+        return false;
+    }
     public String getBaseUrl() {
-        return PropertyUtil.getInstance().getScheme(false) + PropertyUtil.getServer();
+        return PropertyUtil.getInstance().getScheme(false) + PropertyUtil.getInstance().getServer() + ":" + PropertyUtil.getInstance().getPort() + File.separator;
         // return PropertyUtil.getScheme(false) + SPUtil.getString(AppConfig.SERVER);
     }
 
-    public String getProperty(String name) {
+    private String getProperty(String name) {
         return defaultProperty.getProperty(name);
     }
 
@@ -107,6 +105,15 @@ public class PropertyUtil {
         }
     }
 
+    //    public String getAppServer() {
+    //        //        if (PropertyUtil.ENTERPRISE_feige.equals(getProperty("feige.version.type"))) {
+    //        //            return getEnterpriseServer();
+    //        //        } else {
+    //        //            return getProperty("feige.server");
+    //        //        }
+    //        return getServer();
+    //    }
+
     public int getSharedFileListPageSize() {
         return getIntProperty("feige.sharedfilelist.pagesize");
     }
@@ -124,7 +131,22 @@ public class PropertyUtil {
         return getProperty("feige.local.sharedfile.rootdir");
     }
 
-    public String getScheme(boolean useSSL) {
+    private String getScheme(boolean useSSL) {
         return useSSL ? "https://" : "http://";
     }
+
+    public String getPort() {
+        if (TextUtils.isEmpty(SPUtil.getString(AppConfig.PORT))) {
+            return getProperty(AppConfig.PORT);
+        } else {
+            return SPUtil.getString(AppConfig.PORT);
+        }
+    }
+
+    //    public String getUcServer() {
+    //        if (!PropertyUtil.ENTERPRISE_feige.equals(getProperty("feige.version.type"))) {
+    //            return getProperty("feige.ucServer");
+    //        }
+    //        return "";
+    //    }
 }

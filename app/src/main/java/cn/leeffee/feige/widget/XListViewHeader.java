@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import cn.leeffee.feige.R;
 
+
 public class XListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;
 	private ImageView mArrowImageView;

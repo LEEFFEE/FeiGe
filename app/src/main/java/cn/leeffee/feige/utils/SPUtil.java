@@ -15,6 +15,7 @@ public class SPUtil {
     private static SPUtil spUtil;
 
     private SPUtil() {
+
     }
 
     static {

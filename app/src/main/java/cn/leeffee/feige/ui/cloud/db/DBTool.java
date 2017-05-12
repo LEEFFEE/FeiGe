@@ -26,7 +26,6 @@ public class DBTool {
     private DBHelper dbHelper;
     private final static String TAG = "DBTool";
     private static byte[] lock = new byte[0];
-    private static byte[] sig = new byte[0];
     private String currentUserName;
     private String userFilter;
     public final static String CACHE_DIR = "cacheDir"; // 缓存目录
@@ -188,7 +187,7 @@ public class DBTool {
 
             String sql = "select id, name, type, path, savePath, version, offset, addQueueTime, finishTime, fileLength, downloadLength, status, code, isGroupFile, groupId, ownId from downloadQueue where " + userFilter + " AND (" + filter + ") order by addQueueTime DESC ";
             cursor = db.rawQuery(sql, null);
-
+            int percent;
             while (cursor.moveToNext()) {
                 DownloadTask task = new DownloadTask();
                 task.setId(cursor.getInt(0));
@@ -209,6 +208,13 @@ public class DBTool {
                 task.setGroupId(cursor.getString(14));
                 task.setOwnId(cursor.getString(15));
 
+                try {
+                    //新增加
+                    percent = (int) (((float) task.getDownloadLength() / (float) task.getFileLength()) * 100);
+                    task.setPercent(percent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 list.add(task);
             }
             Collections.sort(list, new TaskComparator());
@@ -241,8 +247,8 @@ public class DBTool {
     }
 
     public List<UploadTask> listUploadQueue(Integer... status) {
-        List<UploadTask> list = new ArrayList<UploadTask>();
-        SQLiteDatabase db = null;
+        List<UploadTask> list = new ArrayList<>();
+        SQLiteDatabase db;
         Cursor cursor = null;
         try {
             db = dbHelper.getReadableDatabase();
@@ -254,7 +260,7 @@ public class DBTool {
 
             String sql = "select id, remotePath, status, localPath, version, offset, addQueueTime, url, name, uploadLength, finishTime,fileLength, isGroupFile, groupId from uploadQueue where " + userFilter + " AND (" + filter + ") order by addQueueTime DESC";
             cursor = db.rawQuery(sql, null);
-
+            int percent;
             while (cursor.moveToNext()) {
                 UploadTask task = new UploadTask();
                 task.setId(cursor.getInt(0));
@@ -271,7 +277,13 @@ public class DBTool {
                 task.setFileLength(cursor.getLong(11));
                 task.setIsGroupFile(cursor.getInt(12));
                 task.setGroupId(cursor.getString(13));
-
+                try {
+                    //新增加
+                    percent = (int) (((float) task.getUploadLength() / (float) task.getFileLength()) * 100);
+                    task.setPercent(percent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 list.add(task);
             }
             Collections.sort(list, new TaskComparator());
@@ -735,6 +747,73 @@ public class DBTool {
                 db = dbHelper.getWritableDatabase();
                 db.beginTransaction();
                 String sql = "delete from backupQueue where id=" + id + " AND " + userFilter;
+                db.execSQL(sql);
+                db.setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.i(TAG, e.toString(), e);
+            } finally {
+                db.endTransaction();
+                //				db.close();
+            }
+        }
+    }
+
+    public void deleteBackupTasks(Integer... ids) {
+        synchronized (lock) {
+            SQLiteDatabase db = null;
+            try {
+                String filter = "";
+                for (Integer s : ids) {
+                    filter += " id=" + s + " AND ";
+                }
+                filter = filter.substring(0, filter.lastIndexOf("AND"));
+                db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                String sql = "delete from backupQueue where" + filter + " AND " + userFilter;
+                db.execSQL(sql);
+                db.setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.i(TAG, e.toString(), e);
+            } finally {
+                db.endTransaction();
+                //				db.close();
+            }
+        }
+    }
+    public void deleteDownloadTasks(Integer... ids) {
+        synchronized (lock) {
+            SQLiteDatabase db = null;
+            try {
+                String filter = "";
+                for (Integer s : ids) {
+                    filter += " id=" + s + " AND ";
+                }
+                filter = filter.substring(0, filter.lastIndexOf("AND"));
+                db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                String sql = "delete from downloadQueue where" + filter + " AND " + userFilter;
+                db.execSQL(sql);
+                db.setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.i(TAG, e.toString(), e);
+            } finally {
+                db.endTransaction();
+                //				db.close();
+            }
+        }
+    }
+    public void deleteUploadTasks(Integer... ids) {
+        synchronized (lock) {
+            SQLiteDatabase db = null;
+            try {
+                String filter = "";
+                for (Integer s : ids) {
+                    filter += " id=" + s + " AND ";
+                }
+                filter = filter.substring(0, filter.lastIndexOf("AND"));
+                db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                String sql = "delete from uploadQueue where" + filter + " AND " + userFilter;
                 db.execSQL(sql);
                 db.setTransactionSuccessful();
             } catch (Exception e) {

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <cn.leeffee.feige.widget.USpaceToolBar
+        android:id="@+id/trans_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_title="@string/tab_trans"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/trans_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/uspace_colorPrimaryDark"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/uspace_colorPrimaryDark"
+        app:tabTextColor="@color/uspace_textColorSecondary"/>
+
+    <!--<com.flyco.tablayout.SegmentTabLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"/>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/trans_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/trans_bottom_menu_fl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/trans_selAll_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_backup_bg_btn"
+            android:text="全选"
+            android:textColor="@drawable/selector_backup_text_color"/>
+
+        <Button
+            android:id="@+id/trans_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:enabled="false"
+            android:layout_weight="1"
+            android:background="@drawable/selector_backup_bg_btn"
+            android:text="删除"
+            android:textColor="@drawable/selector_backup_text_color"/>
+    </LinearLayout>
+</LinearLayout>
+    <!--<TabHost xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@android:id/tabhost"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="#f4f4f4">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<RadioGroup-->
+    <!--android:id="@+id/main_radio"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="50dip"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:background="@mipmap/bar_x"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/upload_rb"-->
+    <!--style="@style/tx_tab_top"-->
+    <!--android:checked="true"-->
+    <!--android:drawableBottom="@drawable/tab_top_tx_icon_selector"-->
+    <!--android:gravity="center"-->
+    <!--android:paddingBottom="1dip"-->
+    <!--android:tag="radio_button0"-->
+    <!--android:text="下载"-->
+    <!--android:textSize="15sp"/>-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/download_rb"-->
+    <!--style="@style/tx_tab_top"-->
+    <!--android:drawableBottom="@drawable/tab_top_tx_icon_selector"-->
+    <!--android:gravity="center"-->
+    <!--android:paddingBottom="1dip"-->
+    <!--android:tag="radio_button1"-->
+    <!--android:text="上传"-->
+    <!--android:textSize="15sp"/>-->
+    <!--</RadioGroup>-->
+
+    <!--<FrameLayout-->
+    <!--android:id="@android:id/tabcontent"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="0.70">-->
+    <!--</FrameLayout>-->
+
+    <!--<TabWidget-->
+    <!--android:id="@android:id/tabs"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:visibility="gone">-->
+    <!--</TabWidget>-->
+    <!--</LinearLayout>-->
+    <!--</TabHost>-->

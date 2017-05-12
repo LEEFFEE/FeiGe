@@ -40,7 +40,7 @@
         <activity android:name=".ui.cloud.activity.AboutActivity"/>
         <activity android:name=".ui.cloud.activity.GroupLogActivity"/>
         <activity android:name=".ui.cloud.activity.SearchActivity"/>
-
+        <activity android:name=".ui.cloud.activity.CrashActivity"/>
         <service
             android:name=".ui.cloud.service.DownloadService"
             android:enabled="true"

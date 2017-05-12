@@ -1,6 +1,7 @@
 package cn.leeffee.feige.ui.cloud.presenter;
 
 import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,6 @@ public class ActSearchPresenterImpl extends ActSearchContract.Presenter {
                     }
                     times = 1;
                     mView.loadSuccess(requestCode, fileList);
-
                 } else if (checkCode(res.getErrorCode())) {
                     if (times < 2) {
                         reLogin(requestCode);
@@ -69,7 +69,7 @@ public class ActSearchPresenterImpl extends ActSearchContract.Presenter {
                         times++;
                     } else {
                         times = 1;
-                        mView.loadFailure(requestCode, "请稍后重试");
+                        mView.loadFailure(requestCode, res.getErrorMessage());
                     }
                 } else {
                     mView.loadFailure(requestCode, res.getErrorMessage());
@@ -78,8 +78,7 @@ public class ActSearchPresenterImpl extends ActSearchContract.Presenter {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
-                throwable.printStackTrace();
-                mView.loadFailure(requestCode, "加载失败");
+                handlerThrowable(requestCode, throwable);
             }
         });
     }

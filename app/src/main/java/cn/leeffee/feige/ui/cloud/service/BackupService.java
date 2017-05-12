@@ -40,7 +40,6 @@ import cn.leeffee.feige.ui.cloud.api.ApiOkHttp;
 import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.db.DBTool;
 import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
-import cn.leeffee.feige.ui.cloud.exception.HttpException;
 import cn.leeffee.feige.utils.DateUtil;
 import cn.leeffee.feige.utils.FileMD5;
 import cn.leeffee.feige.utils.FileUtil;
@@ -302,8 +301,6 @@ public class BackupService extends Service {
             } else {
                 excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             }
-        } else if (e instanceof HttpException) {
-            excTask.setStatus(ITransferConstants.NET_EXCEPTION);
         } else if (e instanceof ApiException) {
             int code = ((ApiException) e).getCode();
             switch (code) {
@@ -322,6 +319,9 @@ public class BackupService extends Service {
                 case ITransferConstants.STATUS_PAUSE:
                     excTask.setStatus(ITransferConstants.STATUS_PAUSE);
                     break;
+                case ITransferConstants.WIFI_EXCEPTION:
+                    excTask.setStatus(ITransferConstants.NET_EXCEPTION);
+                    break;
                 default:
                     excTask.setStatus(ITransferConstants.UNKNOWN_ERROR);
                     break;
@@ -335,11 +335,10 @@ public class BackupService extends Service {
      * 断点上传某一个文件,上传完毕后生成一个UploadTask广播到MyFilesActivity
      *
      * @throws ApiException
-     * @throws HttpException
      * @throws IOException
      * @throws JSONException
      */
-    private synchronized UploadTask uploadOneFileForBP(String localFullPath, String remoteFullPath) throws HttpException, ApiException, IOException, JSONException {
+    private synchronized UploadTask uploadOneFileForBP(String localFullPath, String remoteFullPath) throws ApiException, IOException, JSONException {
 
         FileInputStream fis = null;
         DataOutputStream dos = null;
@@ -391,7 +390,7 @@ public class BackupService extends Service {
             long length = uploadedSize;
             while (!isStop && excTask.getStatus() == ITransferConstants.STATUS_RUN && (count = raFile.read(buffer)) != -1) {
                 if (!NetWorkUtil.isWifiEnvOK(this)) {
-                    throw new HttpException(ITransferConstants.WIFI_EXCEPTION);
+                    throw new ApiException(ITransferConstants.WIFI_EXCEPTION);
                 }
                 dos.write(buffer, 0, count);
                 dos.flush();
@@ -462,13 +461,11 @@ public class BackupService extends Service {
     }
 
     private String getUrlForBP() {
-        String strUrl = PropertyUtil.getInstance().getScheme(false) + PropertyUtil.getInstance().getServer() + ApiConstants.FILE_URL;
-        return strUrl;
+        return PropertyUtil.getInstance().getBaseUrl() + ApiConstants.FILE_URL;
     }
 
     private String getParamsForBPUpload(String remoteFullFilePath, long offset, long fileLength, String token) {
-        String _pvalue = "";
-        _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + remoteFullFilePath + "\",version:1},offset:" + offset + ",fileLength:" + fileLength + ",userId:''},token:\"" + token + "\"}";
+        String _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + remoteFullFilePath + "\",version:1},offset:" + offset + ",fileLength:" + fileLength + ",userId:''},token:\"" + token + "\"}";
         // _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + StringUtil.getStringByUTF8(remotFullfilePath) + "\",version:1},offset:" + offset + ",fileLength:" + fileLength + ",userId:''},token:\"" + token + "\"}";
         return _pvalue;
     }

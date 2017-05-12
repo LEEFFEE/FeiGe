@@ -32,7 +32,7 @@ public class ActBackupPresenterImpl extends ActBackupContract.Presenter {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
-                mView.loadFailure(requestCode, "加载失败");
+                handlerThrowable(requestCode, throwable);
             }
         });
     }

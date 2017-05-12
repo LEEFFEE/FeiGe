@@ -325,6 +325,11 @@ public class CategoryFragment extends BaseFragment {
 
         initRefreshLayout();
     }
+
+    @Override
+    protected void initData() {
+
+    }
 }
 
 

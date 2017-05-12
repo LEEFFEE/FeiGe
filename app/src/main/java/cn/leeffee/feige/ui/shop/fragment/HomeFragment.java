@@ -177,4 +177,9 @@ public class HomeFragment extends BaseFragment {
         requestImages();
         initRecyclerView();
     }
+
+    @Override
+    protected void initData() {
+
+    }
 }

@@ -1,7 +1,5 @@
 package cn.leeffee.feige.utils;
 
-import android.os.Handler;
-
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -29,10 +27,10 @@ public class OkHttpUtil {
      */
     private OkHttpClient mClient;
 
-    /**
-     * 因为我们请求数据一般都是子线程中请求，在这里我们使用了handler
-     */
-    private Handler mHandler;
+//    /**
+//     * 因为我们请求数据一般都是子线程中请求，在这里我们使用了handler
+//     */
+   // private Handler mHandler;
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
     /**
@@ -104,8 +102,6 @@ public class OkHttpUtil {
      * @return
      */
     public <T> BaseResponse<T> postSync(String url, String json) {
-        LogUtil.e(url);
-        LogUtil.e(json);
         String jsonStr = postSyncString(url, json);
         //通过获取到的实例来调用内部方法
         BaseResponse<T> res = GsonUtil.gson.fromJson(jsonStr, new TypeToken<BaseResponse<T>>() {
@@ -120,7 +116,10 @@ public class OkHttpUtil {
      * @return
      */
     private Response inner_getSync(String url) {
-        Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url(url)
+                .addHeader("Accept-Language","zh-CN,zh;q=0.8")
+                .addHeader("Accept-Encoding","gzip, deflate, sdch")
+                .build();
         Response response = null;
         try {
             //同步请求返回的是response对象
@@ -140,7 +139,10 @@ public class OkHttpUtil {
     private Response inner_postSync(String url, String json) {
         //创建一个请求实体对象 RequestBody
         RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
-        Request request = new Request.Builder().url(url).post(body).build();
+        Request request = new Request.Builder().url(url).post(body)
+                .addHeader("Accept-Language","zh-CN,zh;q=0.8")
+                .addHeader("Accept-Encoding","gzip, deflate, sdch")
+                .build();
         Response response = null;
         try {
             //同步请求返回的是response对象
@@ -198,7 +200,9 @@ public class OkHttpUtil {
              * 把取得到的结果转为字符串，这里最好用string()
              */
             result = inner_postSync(url, json).body().string();
-            LogUtil.e("OKHttpUtil:"+result);
+            LogUtil.e(url);
+            LogUtil.e(json);
+            LogUtil.e("OKHttpUtil-inner_postSyncString-207:"+result);
         } catch (IOException e) {
             e.printStackTrace();
         }

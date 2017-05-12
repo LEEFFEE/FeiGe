@@ -3,8 +3,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-    >
+            android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,27 +28,27 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:layout_gravity="center_vertical"
-            app:center_title="@string/app_name"
+            app:center_title="登录"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="182dp"
             android:gravity="center">
 
             <ImageView
                 android:layout_width="271dp"
                 android:layout_height="182dp"
                 android:layout_marginTop="10dip"
-                android:src="@mipmap/ic_launcher"
+                android:src="@android:color/transparent"
                 />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="0px"
-            android:focusable="true"
-            android:focusableInTouchMode="true"/>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0px"-->
+            <!--android:layout_height="0px"-->
+            <!--android:focusable="true"-->
+            <!--android:focusableInTouchMode="true"/>-->
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip">
 
-            <EditText
+            <cn.leeffee.feige.widget.USpaceEditText
                 android:id="@+id/login_account_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -67,9 +66,9 @@
                 android:hint="输入帐号"
                 android:maxLines="1"
                 android:paddingLeft="70dp"
-                android:textColor="@color/uspace_textColorSecondary"/>
+                android:textColor="@color/text_color"/>
 
-            <EditText
+            <cn.leeffee.feige.widget.USpaceEditText
                 android:id="@+id/login_pwd_et"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -84,7 +83,7 @@
                 android:maxLines="1"
                 android:paddingLeft="70dp"
                 android:saveEnabled="true"
-                android:textColor="@color/uspace_textColorSecondary"/>
+                android:textColor="@color/text_color"/>
 
             <TextView
                 android:id="@+id/TextView01"
@@ -96,7 +95,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="7dp"
                 android:text=" 帐   号"
-                android:textColor="@color/uspace_textColorSecondary"
+                android:textColor="@color/text_color"
                 android:textSize="16sp"/>
 
             <TextView
@@ -109,7 +108,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="7dp"
                 android:text=" 密   码"
-                android:textColor="@color/uspace_textColorSecondary"
+                android:textColor="@color/text_color"
                 android:textSize="16sp"/>
         </RelativeLayout>
 
@@ -131,7 +130,7 @@
                 android:background="@drawable/btn_login_bg"
                 android:text="登    录"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"></Button>
+                android:textSize="20sp"/>
             <!--
         <Button android:layout_height="wrap_content" android:id="@+id/btn_register"
             android:layout_toRightOf="@+id/login_btn_login" android:layout_marginLeft="16dip"

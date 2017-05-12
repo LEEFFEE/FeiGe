@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:title="@string/menu_title_rename" android:id="@+id/menu_rename_file" />
+	<item android:title="@string/menu_title_rename" android:id="@+id/uspace_menu_rename_file" />
 	<item android:title="@string/menu_title_move_file" android:id="@+id/uspace_menu_move_file" />
+	<item android:title="@string/menu_title_copy" android:id="@+id/uspace_menu_copy_file" />
 	<item android:title="@string/menu_title_download_file" android:id="@+id/uspace_menu_download_file" />
 	<item android:title="@string/menu_title_open_file" android:id="@+id/uspace_menu_open_file" />
 	<item android:title="@string/menu_title_delete_file" android:id="@+id/uspace_menu_delete_file" />

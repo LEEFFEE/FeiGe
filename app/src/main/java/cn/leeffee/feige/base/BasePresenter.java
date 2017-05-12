@@ -2,8 +2,11 @@ package cn.leeffee.feige.base;
 
 import android.content.Context;
 
+import cn.leeffee.feige.App;
 import cn.leeffee.feige.R;
 import cn.leeffee.feige.manager.RxManager;
+import cn.leeffee.feige.ui.cloud.api.ApiException;
+import cn.leeffee.feige.ui.cloud.api.ApiExceptionEngine;
 import cn.leeffee.feige.ui.cloud.constants.AppCode;
 import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.db.DBTool;
@@ -11,6 +14,7 @@ import cn.leeffee.feige.ui.cloud.entity.BaseResponse;
 import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
 import cn.leeffee.feige.utils.FileUtil;
 import cn.leeffee.feige.utils.LogUtil;
+import cn.leeffee.feige.utils.NetWorkUtil;
 import cn.leeffee.feige.utils.SPUtil;
 import cn.leeffee.feige.utils.StringUtil;
 import cn.leeffee.feige.utils.ToastUtil;
@@ -87,9 +91,40 @@ public abstract class BasePresenter<V extends BaseView, M extends BaseModel> {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
-                throwable.printStackTrace();
-                LogUtil.d("再次登录错误" + requestCode);
+               handlerThrowable(requestCode,throwable);
             }
         });
+    }
+
+    /**
+     * 根据资源id获取字符串
+     *
+     * @param resId
+     * @return
+     */
+    protected String getText(int resId) {
+        return App.getAppContext().getText(resId).toString();
+    }
+
+    /**
+     * 失败处理
+     *
+     * @param requestCode 请求码
+     * @param throwable
+     */
+    protected void handlerThrowable(String requestCode, Throwable throwable) {
+        if (!NetWorkUtil.isNetConnected(App.getAppContext())) {
+            mView.loadFailure(requestCode, getText(R.string.network_not_available));
+        } else {
+            String msg;
+            if (throwable instanceof ApiException) {
+                ApiException ex = ApiExceptionEngine.handleException(throwable);
+                msg = ex.getDisplayMessage();
+            } else {
+                msg = getText(R.string.loading_throwable_tips);
+            }
+            throwable.printStackTrace();
+            mView.loadFailure(requestCode, msg);
+        }
     }
 }

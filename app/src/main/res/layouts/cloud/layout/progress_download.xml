@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/listview_bg"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
     android:padding="3dp">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="3dp">
@@ -79,13 +80,41 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/download_progress_cancel_btn"
-        android:layout_width="40dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="3dp"
-        android:background="@drawable/btn_style_delete"
-        android:focusable="false"
-        android:visibility="visible"/>
+    <FrameLayout
+        android:layout_width="35dp"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/download_progress_delete_btn"
+            android:layout_width="28dp"
+            android:layout_height="31dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_style_delete"
+            android:padding="3dp"/>
+
+        <!--<CheckBox-->
+        <!--android:id="@+id/upload_progress_running_status"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:button="@drawable/selector_item_running_status"/>-->
+
+        <CheckBox
+            android:id="@+id/download_progress_check_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:visibility="gone"/>
+        <!--android:button="@drawable/selector_item_check_status"/>-->
+    </FrameLayout>
+    <!--<Button-->
+    <!--android:id="@+id/download_progress_cancel_btn"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_margin="3dp"-->
+    <!--android:background="@drawable/btn_style_delete"-->
+    <!--android:focusable="false"-->
+    <!--android:visibility="visible"/>-->
 </LinearLayout>

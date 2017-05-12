@@ -18,7 +18,6 @@ import cn.leeffee.feige.ui.cloud.entity.ApiGroupLog;
 import cn.leeffee.feige.ui.cloud.model.ActGroupLogModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.ActGroupLogPresenterImpl;
 import cn.leeffee.feige.utils.CommonUtil;
-import cn.leeffee.feige.utils.LogUtil;
 import cn.leeffee.feige.utils.ToastUtil;
 import cn.leeffee.feige.widget.USpaceToolBar;
 import cn.leeffee.feige.widget.XListView;
@@ -81,7 +80,7 @@ public class GroupLogActivity extends BaseActivity<ActGroupLogPresenterImpl, Act
 
     @Override
     protected void initToolBar() {
-        mToolBar.setLeftImage(R.mipmap.ic_menu_back);
+        mToolBar.setLeftImage(R.drawable.selector_ic_menu_back);
         mToolBar.setLeftImageOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,15 +147,15 @@ public class GroupLogActivity extends BaseActivity<ActGroupLogPresenterImpl, Act
     public void loadFailure(String requestCode, String msg) {
         switch (requestCode) {
             case REQUEST_CODE_GROUP_LOG_INIT:
-                LogUtil.e(msg);
+                ToastUtil.showShort(msg);
                 mLoadingLayout.setVisibility(View.GONE);
                 break;
             case REQUEST_CODE_GROUP_LOG_REFRESH:
-                LogUtil.e(msg);
+                ToastUtil.showShort(msg);
                 mListView.stopRefresh();
                 break;
             case REQUEST_CODE_GROUP_LOG_LOAD_MORE:
-                LogUtil.e(msg);
+                ToastUtil.showShort(msg);
                 mListView.stopLoadMore();
                 break;
         }

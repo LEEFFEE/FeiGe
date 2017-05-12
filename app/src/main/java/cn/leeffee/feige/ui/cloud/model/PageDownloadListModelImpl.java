@@ -1,5 +1,6 @@
 package cn.leeffee.feige.ui.cloud.model;
 
+
 import cn.leeffee.feige.ui.cloud.contract.PageDownloadListContract;
 
 /**

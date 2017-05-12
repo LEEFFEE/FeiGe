@@ -3,7 +3,6 @@ package cn.leeffee.feige.utils;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.StatFs;
-import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,7 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cn.leeffee.feige.App;
@@ -22,7 +23,6 @@ import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.entity.USpaceFile;
 import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
-import cn.leeffee.feige.ui.cloud.exception.FileHandler;
 import cn.leeffee.feige.ui.cloud.exception.IClientExceptionCode;
 
 import static cn.leeffee.feige.ui.cloud.constants.AppConstants.ROOT_PATH;
@@ -38,7 +38,13 @@ public class FileUtil {
     private static FileUtil mFileUtil = null;
     private static String mLocalPath;
 
-    public String getSDCardRoot() {
+    public static String getSDCardRoot() {
+        try {
+            SDCardRoot = Environment.getExternalStorageDirectory().getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            SDCardRoot = "/sdcard";
+        }
         return SDCardRoot;
     }
 
@@ -465,42 +471,42 @@ public class FileUtil {
     //		return imgResize(file.toString(), width, height);
     //	}
 
-    public Integer write2SDCard(File file, InputStream in, FileHandler handler) throws IOException {
-        OutputStream out = null;
-        try {
-            file = createUserFileInSDCard(file);
-            out = new FileOutputStream(file);
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int count = 0;
-            long len = 0;
-            while ((count = in.read(buffer, 0, buffer.length)) > 0 && !handler.isCancel()) {
-                len += count;
-                Log.i("write2SDCard", "read in fuffer=" + count + ", length=" + len);
-                if (handler != null) {
-                    handler.send(len);
-                }
-                out.write(buffer, 0, count);
-                out.flush();
-            }
-        } catch (IOException e) {
-            throw new ClientIOException(IClientExceptionCode.CLIENT_IOEXCEPTION_ERROR, "sdcard 存储错误");
-        } finally {
-            if (handler.isCancel() && file.exists()) {
-                file.delete();
-            }
-            try {
-                if (null != out) {
-                    out.close();
-                }
-                if (null != in) {
-                    in.close();
-                }
-            } catch (IOException e) {
-                throw new ClientIOException(IClientExceptionCode.CLIENT_IOEXCEPTION_ERROR, "文件写入流关闭异常");
-            }
-        }
-        return file != null ? 0 : -1;
-    }
+//    public Integer write2SDCard(File file, InputStream in, FileHandler handler) throws IOException {
+//        OutputStream out = null;
+//        try {
+//            file = createUserFileInSDCard(file);
+//            out = new FileOutputStream(file);
+//            byte[] buffer = new byte[BUFFER_SIZE];
+//            int count = 0;
+//            long len = 0;
+//            while ((count = in.read(buffer, 0, buffer.length)) > 0 && !handler.isCancel()) {
+//                len += count;
+//                Log.i("write2SDCard", "read in fuffer=" + count + ", length=" + len);
+//                if (handler != null) {
+//                    handler.send(len);
+//                }
+//                out.write(buffer, 0, count);
+//                out.flush();
+//            }
+//        } catch (IOException e) {
+//            throw new ClientIOException(IClientExceptionCode.CLIENT_IOEXCEPTION_ERROR, "sdcard 存储错误");
+//        } finally {
+//            if (handler.isCancel() && file.exists()) {
+//                file.delete();
+//            }
+//            try {
+//                if (null != out) {
+//                    out.close();
+//                }
+//                if (null != in) {
+//                    in.close();
+//                }
+//            } catch (IOException e) {
+//                throw new ClientIOException(IClientExceptionCode.CLIENT_IOEXCEPTION_ERROR, "文件写入流关闭异常");
+//            }
+//        }
+//        return file != null ? 0 : -1;
+//    }
 
     private static boolean validateSDCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -650,18 +656,28 @@ public class FileUtil {
             resource = R.mipmap.uspace_image_file;
         } else if (FileViewer.isPdf(name)) {
             resource = R.mipmap.uspace_pdf_file;
-        } else if (FileViewer.isTxt(name)) {
+        } else if (FileViewer.isText(name)) {
             resource = R.mipmap.uspace_txt_file;
         } else if (FileViewer.isWord(name)) {
             resource = R.mipmap.uspace_word_file;
+        } else if (FileViewer.isPpt(name)) {
+            resource = R.mipmap.uspace_ppt_file;
+        } else if (FileViewer.isExcel(name)) {
+            resource = R.mipmap.uspace_excel_file;
         } else if (FileViewer.isZip(name)) {
             resource = R.mipmap.uspace_zip_file;
+        } else if (FileViewer.isMusic(name)) {
+            resource = R.mipmap.uspace_music_file;
+        } else if (FileViewer.isVideo(name)) {
+            resource = R.mipmap.uspace_video_file;
+        } else if (FileViewer.isSwf(name)) {
+            resource = R.mipmap.uspace_swf_file;
         }
         return resource;
     }
 
     /**
-     * 用户缓存路径
+     * 用户缓存路径 包括指定的账号  如../uspace/admin@uit
      *
      * @param account 指定某个账号的缓存
      * @return
@@ -717,16 +733,80 @@ public class FileUtil {
     }
 
     /**
+     * 递归删除文件和文件夹
+     *
+     * @param file 要删除的根目录
+     */
+    public static void RecursionDeleteFile(File file) {
+        if (file == null) {
+            return;
+        }
+        if (file.isFile()) {
+            file.delete();
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] childFile = file.listFiles();
+            if (childFile == null || childFile.length == 0) {
+                file.delete();
+                return;
+            }
+            for (File f : childFile) {
+                RecursionDeleteFile(f);
+            }
+            file.delete();
+        }
+    }
+
+    /**
+     * 递归删除文件和文件夹
+     *
+     * @param filePath 要删除的目录
+     */
+    public static void RecursionDeleteFile(String filePath) {
+        RecursionDeleteFile(filePath != null ? new File(filePath) : null);
+    }
+
+    /**
      * 获取硬盘路径获取上一级路径/目录
      *
      * @param diskPath 根据diskPath 获取
      * @return
      */
     public static String getPrePath(String diskPath) {
+        if (diskPath == null)
+            return ROOT_PATH;
         String prePath = diskPath.substring(0, diskPath.lastIndexOf('/'));
         if ("".equals(prePath)) {
             prePath = ROOT_PATH;
         }
         return prePath;
+    }
+
+    /**
+     * 列出给定目录下的本地文件夹
+     *
+     * @param pathname
+     * @return
+     */
+    public static List<USpaceFile> listFolderInfos(String pathname) {
+        File parent = new File(pathname);
+        List<USpaceFile> uSpaceFiles = new ArrayList<>();
+        if (parent != null && parent.isDirectory() && parent.listFiles() != null) {
+            USpaceFile uf;
+            for (File file : parent.listFiles()) {
+                if (file != null) {
+                    //只列出文件夹
+                    if (file.isDirectory()) {
+                        uf = new USpaceFile(file.getName(), file.length(), file.isDirectory(), false, file.getPath(), false);
+                        uf.setModifyTime(new Timestamp(file.lastModified()));
+                        uSpaceFiles.add(uf);
+                    }
+                }
+            }
+            Collections.sort(uSpaceFiles);
+        }
+
+        return uSpaceFiles;
     }
 }

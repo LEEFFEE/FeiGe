@@ -1,9 +1,13 @@
 package cn.leeffee.feige.base;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.View;
+
+import java.util.List;
+
 import butterknife.ButterKnife;
 import cn.leeffee.feige.App;
+import cn.leeffee.feige.ui.cloud.adapter.FileTransBaseAdapter;
 import cn.leeffee.feige.utils.TUtil;
 
 
@@ -16,16 +20,16 @@ public abstract class BasePage<P extends BasePresenter, M extends BaseModel> {
     private View mView;
     public P mPresenter;
     public M mModel;
-    protected Activity mAct;
+    protected Fragment mFrag;
 
-    public BasePage(Activity act) {
-        this(act, null);
+    public BasePage(Fragment frag) {
+        this(frag, "");
     }
 
-    public BasePage(Activity act, String title) {
-        mAct = act;
+    public BasePage(Fragment act, String title) {
+        mFrag = act;
         this.mTitle = title;
-        mView = initView();
+        mView = createView();
         ButterKnife.bind(this, mView);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
@@ -36,9 +40,12 @@ public abstract class BasePage<P extends BasePresenter, M extends BaseModel> {
         this.initView();
     }
 
+
+    public abstract View createView();
+
     protected abstract void initPresenter();
 
-    public abstract View initView();
+    protected abstract void initView();
 
     public void initData() {
 
@@ -60,10 +67,13 @@ public abstract class BasePage<P extends BasePresenter, M extends BaseModel> {
         mView = view;
     }
 
+    public abstract void isShowEmpty(List list);
+
     /**
      * 销毁时执行的方法  销毁时执行的方法  有子类重写
      */
     public void onDestroy() {
 
     }
+    public abstract FileTransBaseAdapter getAdapter();
 }

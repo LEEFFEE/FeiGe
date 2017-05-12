@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -36,9 +37,8 @@ import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.db.DBTool;
 import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
-import cn.leeffee.feige.ui.cloud.exception.HttpException;
 import cn.leeffee.feige.ui.cloud.exception.IClientExceptionCode;
-import cn.leeffee.feige.ui.cloud.fragment.FileTransFragment;
+import cn.leeffee.feige.ui.cloud.fragment.TransFragment;
 import cn.leeffee.feige.utils.FileUtil;
 import cn.leeffee.feige.utils.LogUtil;
 import cn.leeffee.feige.utils.NetWorkUtil;
@@ -320,7 +320,7 @@ public class DownloadService extends Service {
             recordFileSize();
             while (!isStop && excTask.getStatus() == ITransferConstants.STATUS_RUN && (count = fis.read(buffer)) > 0) {
                 if (!NetWorkUtil.isWifiEnvOK(this)) {
-                    throw new Exception("wifi 环境不ok");
+                    throw new ApiException(ITransferConstants.WIFI_EXCEPTION);
                 }
                 try {
                     raFile.write(buffer, 0, count);
@@ -383,12 +383,12 @@ public class DownloadService extends Service {
             } else {
                 excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             }
-        } else if (e instanceof HttpException) {
-            excTask.setStatus(ITransferConstants.NET_EXCEPTION);
         } else if (e instanceof ApiException) {
             int code = ((ApiException) e).getCode();
             if (code == AppCode.PICKUP_CODE_ERROR) {
                 excTask.setStatus(ITransferConstants.GET_CODE_ERROR);
+            } else if (code == ITransferConstants.WIFI_EXCEPTION) {
+                excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             } else {
                 excTask.setStatus(ITransferConstants.SERVER_RESPONSE_PARSE_ERROR);
             }
@@ -412,12 +412,12 @@ public class DownloadService extends Service {
             } else {
                 excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             }
-        } else if (e instanceof HttpException) {
-            excTask.setStatus(ITransferConstants.NET_EXCEPTION);
         } else if (e instanceof ApiException) {
             int code = ((ApiException) e).getCode();
             if (code == AppCode.PICKUP_CODE_ERROR) {
                 excTask.setStatus(ITransferConstants.GET_CODE_ERROR);
+            } else if (code == ITransferConstants.WIFI_EXCEPTION) {
+                excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             } else {
                 excTask.setStatus(ITransferConstants.SERVER_RESPONSE_PARSE_ERROR);
             }
@@ -500,6 +500,7 @@ public class DownloadService extends Service {
                 updateNotify2Complete(notify);
                 File file = FileUtil.newInstance().createSharedFileInSDCard(excTask.getSavePath());
                 tmp.renameTo(file);
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file)));
             }
         } else {
             if (excTask.getDownloadLength() == excTask.getFileLength()) {
@@ -511,6 +512,8 @@ public class DownloadService extends Service {
                     file = FileUtil.newInstance().createSharedFileInSDCard(excTask.getSavePath());
                 }
                 tmp.renameTo(file);
+                // 最后通知图库更新
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file)));
             } else {
                 if (excTask.getStatus() != ITransferConstants.STATUS_CANCEL) {
                     failed(notify);
@@ -573,8 +576,8 @@ public class DownloadService extends Service {
         String tickText = excTask.getName();
         Intent intent = new Intent(DownloadService.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("taskType", FileTransFragment.DOWNLOAD);
-        intent.putExtra(AppConstants.POSITION_FRAGMENT, AppConstants.POSITION_FILETRANS_FRAGMENT);
+        intent.putExtra("taskType", TransFragment.DOWNLOAD);
+        intent.putExtra(AppConstants.POSITION_FRAGMENT, AppConstants.POSITION_TRANS_FRAGMENT);
 
         Notification notification = new Notification(R.mipmap.download_title, tickText, System.currentTimeMillis());
         notification.flags = Notification.FLAG_NO_CLEAR;
@@ -672,7 +675,7 @@ public class DownloadService extends Service {
 
     private void sendBroadCast() {
         Intent intent = new Intent(DOWNLOAD_RECEIVER_ACTION);
-        intent.putExtra("taskType", FileTransFragment.DOWNLOAD);
+        intent.putExtra("taskType", TransFragment.DOWNLOAD);
         intent.putExtra("task", excTask);
         sendBroadcast(intent);
         Log.d(TAG, "sendBroadcast[" + "id=" + excTask.getId() + ", status=" + excTask.getStatus() + ", percent=" + excTask.getPercent() + "]");
@@ -681,7 +684,7 @@ public class DownloadService extends Service {
     private void handleMsg(int type) {
         Intent intent = new Intent(DOWNLOAD_RECEIVER_ACTION);
         intent.putExtra(ITransferConstants.SERVER_MESSAGE, type);
-        intent.putExtra("taskType", FileTransFragment.DOWNLOAD);
+        intent.putExtra("taskType", TransFragment.DOWNLOAD);
         sendBroadcast(intent);
         Log.d(TAG, "send Msg[***** " + type + " *****]");
     }
@@ -734,12 +737,13 @@ public class DownloadService extends Service {
             excTask = null;
         }
         nManager.cancel(DOWNLOAD_NOTIFY_ID);
-        Log.d(TAG, "************* downloadloadService destroy *****************");
+        Log.d(TAG, "************* downloadService destroy *****************");
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent arg0) {
+        LogUtil.e("downloadService bind");
         return this.mBinder;
     }
 

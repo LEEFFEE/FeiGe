@@ -19,6 +19,8 @@
     <color name="uspace_statusBar0.7">#008394</color>
     <color name="uspace_dark_gray">#99ffffff</color>
 
+    <color name="toolbar_BgColor">#43b4f0</color>
+    <color name="text_color">#ff3f3f3f</color>
     <!--商城 start-->
     <color name="shop_colorPrimary">#eb4f38</color>
 

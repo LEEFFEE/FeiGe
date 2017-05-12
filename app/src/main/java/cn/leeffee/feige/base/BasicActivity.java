@@ -15,7 +15,6 @@ import butterknife.Unbinder;
 import cn.leeffee.feige.R;
 import cn.leeffee.feige.manager.AppManager;
 import cn.leeffee.feige.manager.RxManager;
-import cn.leeffee.feige.utils.StatusBarCompat;
 
 /**
  * Created by lhfei on 2017/3/28.
@@ -103,19 +102,6 @@ public abstract class BasicActivity extends AppCompatActivity {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-    }
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-    protected void SetStatusBarColor(int color) {
-        StatusBarCompat.setStatusBarColor(this, color);
-    }
-
-    /**
-     * 沉浸状态栏（4.4以上系统有效）
-     */
-    protected void SetTranslucentBar() {
-        StatusBarCompat.translucentStatusBar(this);
     }
     @Override
     protected void onDestroy() {

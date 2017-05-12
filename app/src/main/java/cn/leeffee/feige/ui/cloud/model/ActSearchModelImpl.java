@@ -1,5 +1,6 @@
 package cn.leeffee.feige.ui.cloud.model;
 
+
 import java.util.List;
 
 import cn.leeffee.feige.ui.cloud.api.ApiClient;
@@ -21,6 +22,6 @@ public class ActSearchModelImpl extends ActSearchContract.Model{
     public Observable<BaseResponse<List<ApiFile>>> listSearchFiles(String keyword, String token) {
         String jsonParams = "{method:'listSearchDir',params:{searchString :'" + keyword + "',userId :\"\"},token:\"" + token + "\"}";
         LogUtil.e("jsonParams=" + jsonParams);
-        return ApiClient.getDefault(HostType.HOST_USPACE).listSearchDir(jsonParams).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return ApiClient.getDefault(HostType.HOST_USPACE).listSearchDir(ApiClient.NEED_CACHE,jsonParams).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

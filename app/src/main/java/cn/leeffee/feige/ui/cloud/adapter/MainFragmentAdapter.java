@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.factory.FragmentFactory;
 
+
 /**
  * Created by lhfei on 2017/3/27.
  */

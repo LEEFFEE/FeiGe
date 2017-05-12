@@ -1,11 +1,13 @@
 package cn.leeffee.feige.ui.cloud.presenter;
 
+
 import java.util.List;
 
 import cn.leeffee.feige.ui.cloud.contract.PageUploadListContract;
 import cn.leeffee.feige.ui.cloud.service.UploadTask;
 import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -15,9 +17,9 @@ import io.reactivex.functions.Function;
 
 public class PageUploadListPresenterImpl extends PageUploadListContract.Presenter {
 
-    public void listUploadQueue(Integer[] arrStatus, final String requestCode) {
+    public Disposable listUploadQueue(Integer[] arrStatus, final String requestCode) {
         mView.loadBefore(requestCode);
-        Flowable.just(arrStatus).map(new Function<Integer[], List<UploadTask>>() {
+        return Flowable.just(arrStatus).map(new Function<Integer[], List<UploadTask>>() {
             @Override
             public List<UploadTask> apply(@NonNull Integer[] ints) throws Exception {
                 return mDBTool.listUploadQueue(ints);
@@ -30,7 +32,7 @@ public class PageUploadListPresenterImpl extends PageUploadListContract.Presente
         }, new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
-                mView.loadFailure(requestCode, "加载错误");
+                handlerThrowable(requestCode, throwable);
             }
         });
     }

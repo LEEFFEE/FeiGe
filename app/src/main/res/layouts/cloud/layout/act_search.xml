@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.cloud.activity.SearchActivity">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@mipmap/ic_search_back"/>
+            android:background="@drawable/selector_search_go_back"/>
 
         <cn.leeffee.feige.widget.USpaceEditText
             android:id="@+id/search_keyword"
@@ -43,14 +43,14 @@
             android:textSize="14sp"/>
 
         <TextView
-            android:id="@+id/search_submit"
+            android:id="@+id/search_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="搜索"
+            android:text="取消"
             android:textColor="@drawable/btn_search_text_color_selector"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <TextView
@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="没有找到你要搜索的内容~"
+            android:text="@string/folder_empty_tips"
             android:textColor="@color/uspace_textColorSecondary"
             android:textSize="14sp"
             android:visibility="gone"/>

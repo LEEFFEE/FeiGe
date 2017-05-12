@@ -62,6 +62,11 @@ public class CartFragment extends BaseFragment implements View.OnClickListener {
         showData();
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     @OnClick(R.id.btn_del)
     public void delCart() {
         mAdapter.delCart();

@@ -14,6 +14,7 @@ import cn.leeffee.feige.utils.ToastUtil;
 import cn.leeffee.feige.widget.MyProgressDialog;
 import cn.leeffee.feige.widget.USpaceToolBar;
 
+
 public class FeedbackActivity extends BaseActivity<ActFeedbackPresenterImpl, ActFeedbackModelImpl> implements ActFeedbackContract.View {
 
     @BindView(R.id.feedback_toolbar)
@@ -35,7 +36,7 @@ public class FeedbackActivity extends BaseActivity<ActFeedbackPresenterImpl, Act
 
     @Override
     protected void initToolBar() {
-        mToolBar.setLeftImage(R.mipmap.ic_menu_back);
+        mToolBar.setLeftImage(R.drawable.selector_ic_menu_back);
         mToolBar.setLeftImageOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +51,7 @@ public class FeedbackActivity extends BaseActivity<ActFeedbackPresenterImpl, Act
                 if (content == null || content.length() == 0) {
                     ToastUtil.showShort(getString(R.string.error_suggestion_content_empty));
                 } else {
-                    mPresenter.addSuggestion(content, REQUEST_CODE_ADD_SUGGESTION);
+                    mRxManager.add(mPresenter.addSuggestion(content, REQUEST_CODE_ADD_SUGGESTION));
                     // new SendSuggestionTask(NewSuggestionActivity.this).execute();
                 }
             }
@@ -81,7 +82,7 @@ public class FeedbackActivity extends BaseActivity<ActFeedbackPresenterImpl, Act
     @Override
     public void loadSuccess(String requestCode, Object result) {
         if (REQUEST_CODE_ADD_SUGGESTION.equals(requestCode)) {
-            ToastUtil.showShort(getString(R.string.msg_suggestion_success));
+            ToastUtil.showShort("发送成功！");
             if (pDialog != null && pDialog.isShowing()) {
                 pDialog.dismiss();
             }

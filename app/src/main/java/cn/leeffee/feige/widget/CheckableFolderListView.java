@@ -14,10 +14,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +71,10 @@ public class CheckableFolderListView extends ListView {
         disposable = Flowable.just(this.currentLocalPath).map(new Function<String, List<USpaceFile>>() {
             @Override
             public List<USpaceFile> apply(@NonNull String pathName) throws Exception {
-                return listFolderInfos(pathName);
+                if (mCheckedFolderInfos != null) {
+                    mCheckedFolderInfos.clear();
+                }
+                return FileUtil.listFolderInfos(pathName);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<USpaceFile>>() {
 
@@ -101,7 +100,10 @@ public class CheckableFolderListView extends ListView {
 
     public void displayFolder(String curPath) {
         this.currentLocalPath = curPath;
-        mFolderInfos = listFolderInfos(currentLocalPath);
+        if (mCheckedFolderInfos != null) {
+            mCheckedFolderInfos.clear();
+        }
+        mFolderInfos = FileUtil.listFolderInfos(currentLocalPath);
         if (!rootPath.equals(currentLocalPath)) {
             mFolderInfos.add(0, new USpaceFile("返回上一级", 0, false, true, "", false));
         }
@@ -198,30 +200,27 @@ public class CheckableFolderListView extends ListView {
         return currentLocalPath;
     }
 
-    public List<USpaceFile> listFolderInfos(String pathname) {
-        File parent = new File(pathname);
-        List<USpaceFile> uSpaceFiles = new ArrayList<>();
-        if (mCheckedFolderInfos != null) {
-            mCheckedFolderInfos.clear();
-        }
-        if (parent != null && parent.isDirectory() && parent.listFiles() != null) {
-            USpaceFile uf;
-            for (File file : parent.listFiles()) {
-                if (file != null) {
-                    //只列出文件夹
-                    if (file.isDirectory()) {
-                        uf = new USpaceFile(file.getName(), file.length(), file.isDirectory(), false, file.getPath(), false);
-                        uf.setModifyTime(new Timestamp(file.lastModified()));
-                        uSpaceFiles.add(uf);
-                        // uSpaceFiles.add(new FileInfo(file.getName(), file.length(), file.isFile(), false, file.getPath(), new Timestamp(file.lastModified())));
-                    }
-                }
-            }
-            Collections.sort(uSpaceFiles);
-        }
-
-        return uSpaceFiles;
-    }
+    //    public List<USpaceFile> listFolderInfos(String pathname) {
+    //        File parent = new File(pathname);
+    //        List<USpaceFile> uSpaceFiles = new ArrayList<>();
+    //        if (parent != null && parent.isDirectory() && parent.listFiles() != null) {
+    //            USpaceFile uf;
+    //            for (File file : parent.listFiles()) {
+    //                if (file != null) {
+    //                    //只列出文件夹
+    //                    if (file.isDirectory()) {
+    //                        uf = new USpaceFile(file.getName(), file.length(), file.isDirectory(), false, file.getPath(), false);
+    //                        uf.setModifyTime(new Timestamp(file.lastModified()));
+    //                        uSpaceFiles.add(uf);
+    //                        // uSpaceFiles.add(new FileInfo(file.getName(), file.length(), file.isFile(), false, file.getPath(), new Timestamp(file.lastModified())));
+    //                    }
+    //                }
+    //            }
+    //            Collections.sort(uSpaceFiles);
+    //        }
+    //
+    //        return uSpaceFiles;
+    //    }
 
     private void onFolderCheckedChange(boolean checked, USpaceFile file) {
         if (checked) {

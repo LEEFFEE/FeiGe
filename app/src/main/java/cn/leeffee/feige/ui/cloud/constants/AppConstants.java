@@ -12,11 +12,10 @@ public interface AppConstants {
      * MainActivity界面中Tab页个数
      */
     int MAIN_SIZE_FRAGMENT = 4;
-    int POSITION_MYFILE_FRAGMENT = 0;
-    int POSITION_MYGROUP_FRAGMENT = 1;
-    int POSITION_FILETRANS_FRAGMENT = 2;
-    int POSITION_MORE_FRAGMENT = 3;
-   // int POSITION_FILESEARCHF_RAGMENT = 3;
+    int POSITION_CLOUD_FRAGMENT = 0;
+    int POSITION_GROUP_FRAGMENT = 1;
+    int POSITION_TRANS_FRAGMENT = 2;
+    int POSITION_SETTING_FRAGMENT = 3;
 
     String CURRENT_REMOTE_PATH = "currentRemotePath";
     String TITLE_MY_GROUP = "我的群组";

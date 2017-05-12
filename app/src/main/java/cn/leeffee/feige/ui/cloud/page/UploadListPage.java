@@ -1,10 +1,10 @@
 package cn.leeffee.feige.ui.cloud.page;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.leeffee.feige.App;
 import cn.leeffee.feige.R;
 import cn.leeffee.feige.base.BasePage;
+import cn.leeffee.feige.ui.cloud.adapter.FileTransBaseAdapter;
 import cn.leeffee.feige.ui.cloud.adapter.UploadListAdapter;
+import cn.leeffee.feige.ui.cloud.adapter.UploadListHolder;
 import cn.leeffee.feige.ui.cloud.contract.PageUploadListContract;
 import cn.leeffee.feige.ui.cloud.model.PageUploadListModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.PageUploadListPresenterImpl;
@@ -39,7 +42,10 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
     TextView mEmpty;
     @BindView(R.id.trans_upload_loading)
     LinearLayout mLoading;
+    //    @BindView(R.id.trans_upload_bottom_menu)
+    //    LinearLayout mBottomMenu;
     private List<UploadTask> mTasks;
+    //    private UploadListAdapter mAdapter;
     private UploadListAdapter mAdapter;
     private static final String REQUEST_CODE_LIST_UPLOAD_QUEUE = "db_listUploadQueue";
     private UploadReceiver mUploadReceiver;
@@ -53,11 +59,11 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            View view = null;
+            View view;
             if (task != null && task.getStatus() != 5) {
                 Log.i(TAG, "Receiver [id=" + task.getId() + ",Status=" + task.getStatus() + ",Percent=" + task.getPercent() + "]");
                 UploadTask mTask = null;
-                UploadListAdapter.ViewHolder tag = new UploadListAdapter.ViewHolder();
+                UploadListHolder tag = new UploadListHolder(null);
                 tag.taskId = task.getId();
                 view = mListView.findViewWithTag(tag);
                 for (int i = 0; i < mTasks.size(); i++) {
@@ -72,7 +78,8 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
                     mTask.setUploadLength(task.getUploadLength());
                 }
                 if (null != view) {
-                    UploadListAdapter.ViewHolder holder = (UploadListAdapter.ViewHolder) view.getTag();
+                    // UploadListAdapter.ViewHolder holder = (UploadListAdapter.ViewHolder) view.getTag();
+                    UploadListHolder holder = (UploadListHolder) view.getTag();
                     mAdapter.changeProgressStatus(holder, task);
                 }
             }
@@ -86,26 +93,42 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
         }
     }
 
-    public UploadListPage(Activity act) {
-        super(act);
+    public UploadListPage(Fragment frag) {
+        super(frag);
     }
 
-    public UploadListPage(Activity act, String title) {
-        super(act, title);
+    public UploadListPage(Fragment frag, String title) {
+        super(frag, title);
+    }
+
+    @Override
+    public View createView() {
+        return LayoutInflater.from(App.getAppContext()).inflate(R.layout.trans_upload_list, null);
     }
 
     @Override
     protected void initPresenter() {
-        mAdapter = new UploadListAdapter(mAct);
-        mListView.setAdapter(mAdapter);
         mPresenter.setVM(this, mModel);
-        mUploadReceiver = new UploadReceiver();
-        App.getAppContext().registerReceiver(mUploadReceiver, new IntentFilter(UploadService.UPLOAD_RECEIVER_ACTION));
     }
 
     @Override
-    public View initView() {
-        return LayoutInflater.from(App.getAppContext()).inflate(R.layout.trans_upload_list, null);
+    protected void initView() {
+        //        mAdapter = new UploadListAdapter(mAct);
+        mAdapter = new UploadListAdapter(mFrag);
+        mListView.setAdapter(mAdapter);
+        // mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        //            @Override
+        //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        //                ToastUtil.showShort("onItemLongClick");
+        //                boolean multiMode = mAdapter.changeMode();
+        //                changeMenu(multiMode);
+        //                return true;
+        //            }
+        //        });
+        mTasks = new ArrayList<>();
+        mUploadReceiver = new UploadReceiver();
+        App.getAppContext().registerReceiver(mUploadReceiver, new IntentFilter(UploadService.UPLOAD_RECEIVER_ACTION));
     }
 
     @Override
@@ -113,43 +136,23 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
         Integer arrStatus[] = new Integer[]{1, 2, 3, 4, 10, 11, 12, 13};
         mPresenter.listUploadQueue(arrStatus, REQUEST_CODE_LIST_UPLOAD_QUEUE);
     }
-
-    @Override
-    public void loadBefore(String requestCode) {
-        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
-            mLoading.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void loadSuccess(String requestCode, Object result) {
-        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
-            mTasks = (List<UploadTask>) result;
-            mAdapter.setData(mTasks);
-            mAdapter.notifyDataSetChanged();
-            isShowEmpty(mTasks);
-            mLoading.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void loadFailure(String requestCode, String msg) {
-        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
-            mLoading.setVisibility(View.GONE);
-        }
-    }
-
     /**
      * 数据是否为空提示
      *
      * @param list
      */
+    @Override
     public void isShowEmpty(List list) {
         if (list != null && list.size() > 0) {
             mEmpty.setVisibility(View.GONE);
         } else {
             mEmpty.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public FileTransBaseAdapter getAdapter() {
+        return mAdapter;
     }
 
     /**
@@ -177,6 +180,31 @@ public class UploadListPage extends BasePage<PageUploadListPresenterImpl, PageUp
             case ITransferConstants.STATUS_FINISH:
                 ToastUtil.showShort("[" + task.getName() + "]上传完成");
                 break;
+        }
+    }
+
+    @Override
+    public void loadBefore(String requestCode) {
+        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
+            mLoading.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void loadSuccess(String requestCode, Object result) {
+        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
+            mTasks = (List<UploadTask>) result;
+            mAdapter.setData(mTasks);
+            mAdapter.notifyDataSetChanged();
+            isShowEmpty(mTasks);
+            mLoading.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void loadFailure(String requestCode, String msg) {
+        if (requestCode.equals(REQUEST_CODE_LIST_UPLOAD_QUEUE)) {
+            mLoading.setVisibility(View.GONE);
         }
     }
 }

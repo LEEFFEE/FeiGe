@@ -75,4 +75,6 @@ public class ApiConstants {
     public static final String GROUP_LOGS_URL = "uspace/log";
     public static final String REGISTER_URL = "ucenter/subscriber.action";
     public static final String SEARCH_MY_FILES_URL = "uspace/file";
+    //http://172.16.60.202/pick/picklink.html?filecode=5b2bcdb4900ead920302aadd2f45792f
+    public static final String PICK_PICKLINK = "pick/picklink.html?filecode=";
 }

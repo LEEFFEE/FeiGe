@@ -311,11 +311,6 @@ public class Pager {
         }
 
 
-
-
-
-
-
         @Override
         public void onError(Response response, int code, Exception e) {
 

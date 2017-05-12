@@ -71,7 +71,7 @@ public class ApiAccountProp {
     //    private int backupPathId;
     //    private String createId;
     //    private Object distinguishedName;
-    //    private String email;
+    private String email;
     //    private String empNo;
     //    private ExtendedAttributesDtoBean extendedAttributesDto;
     //    private String fileType;
@@ -95,7 +95,7 @@ public class ApiAccountProp {
     //    private int online;
     //    private String password;
     //    private int pathId;
-    //    private String realName;
+    private String realName;
     //    private String registerDate;
     //    private Object role;
     //    private String roleIds;
@@ -170,13 +170,13 @@ public class ApiAccountProp {
     //        this.distinguishedName = distinguishedName;
     //    }
     //
-    //    public String getEmail() {
-    //        return email;
-    //    }
-    //
-    //    public void setEmail(String email) {
-    //        this.email = email;
-    //    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     //
     //    public String getEmpNo() {
     //        return empNo;
@@ -362,13 +362,13 @@ public class ApiAccountProp {
     //        this.pathId = pathId;
     //    }
     //
-    //    public String getRealName() {
-    //        return realName;
-    //    }
-    //
-    //    public void setRealName(String realName) {
-    //        this.realName = realName;
-    //    }
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
     //
     //    public String getRegisterDate() {
     //        return registerDate;

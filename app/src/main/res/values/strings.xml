@@ -351,4 +351,14 @@
     <string name="mine">我的</string>
     <string name="title_activity_ware_detail">WareDetailActivity</string>
     <string name="share">分享</string>
+
+    <!--自己定义-->
+    <string name="folder_empty_tips">这是一个空文件夹</string>
+    <string name="menu_title_copy">复制到</string>
+    <string name="loading_throwable_tips">加载失败</string>
+
+    <string name="tab_cloud">云盘</string>
+    <string name="tab_group">群组</string>
+    <string name="tab_trans">传输</string>
+    <string name="tab_setting">设置</string>
 </resources>

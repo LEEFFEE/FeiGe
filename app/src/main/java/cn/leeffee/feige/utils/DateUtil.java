@@ -29,11 +29,11 @@ public class DateUtil {
 			pattern = "yyyy/MM/dd HH:mm:ss";
 		}
 		// 定义日期/时间格式
-		SimpleDateFormat formate = new SimpleDateFormat(pattern);
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
 		Date date = null;
 		try {
 			// 转换日期/时间格式
-			date = formate.parse(str);
+			date = format.parse(str);
 		} catch (Exception e) {
 			System.out.println("string2Date formate error");
 		}

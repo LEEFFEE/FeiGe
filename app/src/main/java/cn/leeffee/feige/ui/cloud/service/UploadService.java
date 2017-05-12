@@ -40,8 +40,7 @@ import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.db.DBTool;
 import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
-import cn.leeffee.feige.ui.cloud.exception.HttpException;
-import cn.leeffee.feige.ui.cloud.fragment.FileTransFragment;
+import cn.leeffee.feige.ui.cloud.fragment.TransFragment;
 import cn.leeffee.feige.utils.LogUtil;
 import cn.leeffee.feige.utils.NetWorkUtil;
 import cn.leeffee.feige.utils.PropertyUtil;
@@ -174,7 +173,7 @@ public class UploadService extends Service {
 
             while (!isStop && excTask.getStatus() == ITransferConstants.STATUS_RUN && (count = fis.read(buffer)) != -1) {
                 if (!NetWorkUtil.isWifiEnvOK(this)) {
-                    throw new HttpException(ITransferConstants.WIFI_EXCEPTION);
+                    throw new ApiException(ITransferConstants.WIFI_EXCEPTION);
                 }
                 dos.write(buffer, 0, count);
                 dos.flush();
@@ -271,10 +270,10 @@ public class UploadService extends Service {
             long length = uploadedSize;
             excTask.setFileLength(total);// 文件大小
             recordFileSize();
-         //   android.os.Debug.waitForDebugger();
+            //   android.os.Debug.waitForDebugger();
             while (!isStop && excTask.getStatus() == ITransferConstants.STATUS_RUN && (count = raFile.read(buffer)) != -1) {
                 if (!NetWorkUtil.isWifiEnvOK(this)) {
-                    throw new HttpException(ITransferConstants.WIFI_EXCEPTION);
+                    throw new ApiException(ITransferConstants.WIFI_EXCEPTION);
                 }
                 dos.write(buffer, 0, count);
                 dos.flush();
@@ -351,14 +350,14 @@ public class UploadService extends Service {
             } else {
                 excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             }
-        } else if (e instanceof HttpException) {
-            excTask.setStatus(ITransferConstants.NET_EXCEPTION);
         } else if (e instanceof ApiException) {
             int code = ((ApiException) e).getCode();
             if (code == ITransferConstants.SERVER_RESPONSE_ERROR) {
                 excTask.setStatus(ITransferConstants.SERVER_RESPONSE_ERROR);
             } else if (code == ITransferConstants.FILE_NOT_EXIST) {
                 excTask.setStatus(ITransferConstants.FILE_NOT_EXIST);
+            } else if (code == ITransferConstants.WIFI_EXCEPTION) {
+                excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             } else {
                 excTask.setStatus(ITransferConstants.TRANSFER_FAIL_ERROR);
             }
@@ -379,14 +378,14 @@ public class UploadService extends Service {
             } else {
                 excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             }
-        } else if (e instanceof HttpException) {
-            excTask.setStatus(ITransferConstants.NET_EXCEPTION);
         } else if (e instanceof ApiException) {
             int code = ((ApiException) e).getCode();
             if (code == ITransferConstants.SERVER_RESPONSE_ERROR) {
                 excTask.setStatus(ITransferConstants.SERVER_RESPONSE_ERROR);
             } else if (code == ITransferConstants.FILE_NOT_EXIST) {
                 excTask.setStatus(ITransferConstants.FILE_NOT_EXIST);
+            } else if (code == ITransferConstants.WIFI_EXCEPTION) {
+                excTask.setStatus(ITransferConstants.NET_EXCEPTION);
             } else {
                 excTask.setStatus(ITransferConstants.TRANSFER_FAIL_ERROR);
             }
@@ -398,8 +397,8 @@ public class UploadService extends Service {
         updateNoticeProgress(notify);
     }
 
-    private String getUrlForBP() throws HttpException, ApiException {
-        String strUrl = "";
+    private String getUrlForBP() throws ApiException {
+        String strUrl;
         if (excTask.getIsGroupFile() == AppConstants.GROUP_FILE) {
             strUrl = getBaseUrl() + ApiConstants.GROUP_URL;
         } else {
@@ -418,12 +417,12 @@ public class UploadService extends Service {
      * @return
      */
     private String getParamsForBPUpload(String remoteFullFilePath, long offset, long fileLength, String token) {
-        String _pvalue = "";
-//        if (excTask.getIsGroupFile() == AppConstants.GROUP_FILE) {
-//            _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + StringUtil.getStringByUTF8(remoteFullFilePath) + "\",version:" + excTask.getVersion() + "},offset:" + offset + ",fileLength:" + fileLength + ",groupId:\"" + excTask.getGroupId() + "\",userId:''},token:\"" + token + "\"}";
-//        } else {
-//            _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + StringUtil.getStringByUTF8(remoteFullFilePath) + "\",version:" + excTask.getVersion() + "},offset:" + offset + ",fileLength:" + fileLength + ",userId:''},token:\"" + token + "\"}";
-//        }
+        String _pvalue;
+        //        if (excTask.getIsGroupFile() == AppConstants.GROUP_FILE) {
+        //            _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + StringUtil.getStringByUTF8(remoteFullFilePath) + "\",version:" + excTask.getVersion() + "},offset:" + offset + ",fileLength:" + fileLength + ",groupId:\"" + excTask.getGroupId() + "\",userId:''},token:\"" + token + "\"}";
+        //        } else {
+        //            _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + StringUtil.getStringByUTF8(remoteFullFilePath) + "\",version:" + excTask.getVersion() + "},offset:" + offset + ",fileLength:" + fileLength + ",userId:''},token:\"" + token + "\"}";
+        //        }
         if (excTask.getIsGroupFile() == AppConstants.GROUP_FILE) {
             _pvalue = "{method:\"uploadFile\",params:{filePath:{path:\"" + remoteFullFilePath + "\",version:" + excTask.getVersion() + "},offset:" + offset + ",fileLength:" + fileLength + ",groupId:\"" + excTask.getGroupId() + "\",userId:''},token:\"" + token + "\"}";
         } else {
@@ -432,13 +431,13 @@ public class UploadService extends Service {
         return _pvalue;
     }
 
-    private String getUrl() throws HttpException, ApiException {
+    private String getUrl() throws ApiException {
         // 登录状态下的 token
         String token = SPUtil.getString(AppConfig.TOKEN);
         if (StringUtil.isEmpty(token)) {
             token = ApiOkHttp.login();
         }
-        String strUrl = "";
+        String strUrl;
         String params = "?path=" + URLEncoder.encode(excTask.getRemotePath()) + "&token=" + token + "&uploadType=0";
 
         if (excTask.getIsGroupFile() == AppConstants.GROUP_FILE) {
@@ -458,7 +457,7 @@ public class UploadService extends Service {
             excTask.setPercent(percent);
             if (percent < 3 || (percent % 3 == 0)) {
                 updateCompleteSize();//记录到数据库
-                sendBroadCast();// 广播到 FileTransFragment
+                sendBroadCast();// 广播到 TransFragment
                 updateNoticeProgress(notify);
             }
         }
@@ -476,7 +475,7 @@ public class UploadService extends Service {
     }
 
     public String getBaseUrl() {
-        return PropertyUtil.getInstance().getScheme(false) + PropertyUtil.getServer();
+        return PropertyUtil.getInstance().getBaseUrl();
     }
 
     private void updateStatus(Integer taskId, Integer status) {
@@ -553,7 +552,7 @@ public class UploadService extends Service {
 
     private void sendBroadCast() {
         Intent intent = new Intent(UPLOAD_RECEIVER_ACTION);
-        intent.putExtra("taskType", FileTransFragment.UPLOAD);
+        intent.putExtra("taskType", TransFragment.UPLOAD);
         intent.putExtra("task", excTask);
         sendBroadcast(intent);
         Log.i(TAG, "sendBroadcast[" + "id=" + excTask.getId() + ", status=" + excTask.getStatus() + ", percent=" + excTask.getPercent() + "]");
@@ -564,8 +563,8 @@ public class UploadService extends Service {
         // 通过通知来进入上传列表
         Intent intent = new Intent(UploadService.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("taskType", FileTransFragment.UPLOAD);
-        intent.putExtra(AppConstants.POSITION_FRAGMENT, AppConstants.POSITION_FILETRANS_FRAGMENT);
+        intent.putExtra("taskType", TransFragment.UPLOAD);
+        intent.putExtra(AppConstants.POSITION_FRAGMENT, AppConstants.POSITION_TRANS_FRAGMENT);
 
         Notification notification = new Notification(R.mipmap.upload_title, tickText, System.currentTimeMillis());
         notification.flags = Notification.FLAG_NO_CLEAR;
@@ -581,7 +580,7 @@ public class UploadService extends Service {
     private void handleMsg(int type) {
         Intent intent = new Intent(UPLOAD_RECEIVER_ACTION);
         intent.putExtra(ITransferConstants.SERVER_MESSAGE, type);
-        intent.putExtra("taskType", FileTransFragment.UPLOAD);
+        intent.putExtra("taskType", TransFragment.UPLOAD);
         sendBroadcast(intent);
         Log.i(TAG, "send Msg[***** " + type + " *****]");
     }
@@ -600,7 +599,8 @@ public class UploadService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent arg0) {
+    public IBinder onBind(Intent intent) {
+        LogUtil.e("uploadService bind");
         return this.mBinder;
     }
 
@@ -643,7 +643,7 @@ public class UploadService extends Service {
 
         @Override
         public boolean cancelTask(int id) {
-            boolean flag = false;
+            boolean flag;
             if (getExcTask() != null && getExcTask().getId() == id) {// 正在执行的任务
                 getExcTask().setStatus(ITransferConstants.STATUS_CANCEL);
                 Log.i(TAG, "############ Id=" + getExcTask().getId() + ",Name=" + getExcTask().getName() + "############");
@@ -658,6 +658,13 @@ public class UploadService extends Service {
         @Override
         public UploadTask getExcTask() {
             return UploadService.this.getExcTask();
+        }
+
+        @Override
+        public void pauseTask(int id) {
+            if (getExcTask() != null && getExcTask().getId() == id) {
+                getExcTask().setStatus(ITransferConstants.STATUS_PAUSE);
+            }
         }
 
         @Override
@@ -698,6 +705,7 @@ public class UploadService extends Service {
     private boolean isBPUploadSuccess(JSONObject jsonObj) {
         try {
             int retVer = jsonObj.getInt("result");
+            LogUtil.e("上传服务：result:" + retVer);
         } catch (Exception e) {
             return false;
         }

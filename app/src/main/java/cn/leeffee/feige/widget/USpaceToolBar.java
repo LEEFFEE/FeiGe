@@ -104,6 +104,12 @@ public class USpaceToolBar extends Toolbar {
     }
 
     /*=================左边第二个按钮===================*/
+
+    /**
+     * 左边第二
+     *
+     * @param resId
+     */
     public void setLeftSecondImage(int resId) {
         setLeftSecondImageVisibility(VISIBLE);
         this.leftSecondImage.setBackgroundResource(resId);
@@ -120,13 +126,14 @@ public class USpaceToolBar extends Toolbar {
     /*=================右边第一个按钮===================*/
 
     /**
-     * 设置右边第一个控件的背景图
+     * 设置右边倒数第一个控件的背景图
      *
      * @param resId 要设置的图片的资源id
      */
     public void setRightImage(int resId) {
         setRightControlVisibility(VISIBLE);//设置控件可见
         this.rightText.setVisibility(GONE);
+        this.rightImage.setVisibility(VISIBLE);
         this.rightImage.setBackgroundResource(resId);
     }
 
@@ -138,7 +145,19 @@ public class USpaceToolBar extends Toolbar {
     public void setRightText(CharSequence content) {
         setRightControlVisibility(VISIBLE);//设置控件可见
         this.rightImage.setVisibility(GONE);
+        this.rightText.setVisibility(VISIBLE);
         this.rightText.setText(content);
+    }
+
+    public void toggleRightControl() {
+        if (View.VISIBLE == this.rightImage.getVisibility()) {
+            this.rightImage.setVisibility(INVISIBLE);
+            this.rightText.setVisibility(VISIBLE);
+        } else {
+            this.rightImage.setVisibility(VISIBLE);
+            this.rightText.setVisibility(INVISIBLE);
+        }
+
     }
 
     public void setRightImageOnClick(OnClickListener listener) {
@@ -167,6 +186,12 @@ public class USpaceToolBar extends Toolbar {
     }
 
     /*=================右边第二个按钮===================*/
+
+    /**
+     * 设置右边倒数第二张图资源id
+     *
+     * @param resId
+     */
     public void setRightSecondImage(int resId) {
         setRightSecondImageVisibility(VISIBLE);
         this.rightSecondImage.setBackgroundResource(resId);

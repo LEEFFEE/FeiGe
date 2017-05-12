@@ -97,4 +97,9 @@ public class HotFragment extends BaseFragment implements Pager.OnPageListener<Wa
 
         pager.request();
     }
+
+    @Override
+    protected void initData() {
+
+    }
 }

@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="47dp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:background="@mipmap/bar_x_head"-->
+            <!--android:gravity="center_vertical">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_header_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="更多"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="18sp"/>-->
+            <!--</RelativeLayout>-->
+
+            <cn.leeffee.feige.widget.USpaceToolBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:center_title="@string/tab_setting"/>
+
+            <Button
+                android:id="@+id/more_sign_in_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/btn_login_bg"
+                android:enabled="false"
+                android:text="@string/str_inc_signin"
+                android:textColor="#ffffffff"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_above"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxLines="1"
+                        android:text="用户名:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/more_account_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dip"
+                        android:gravity="right"
+                        android:maxLines="1"
+                        android:text="加载中..."
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="空间:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/more_space_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:text="加载中..."
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.6"
+                        android:maxLines="1"
+                        android:text="仅在WIFI网络下上传/下载/备份："
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/more_wifi_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:paddingRight="40dip"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.6"
+                        android:maxLines="1"
+                        android:text="小文件(1MB以下)下载是否提示："
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <CheckBox
+                        android:id="@+id/more_small_files_tips_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:paddingRight="40dip"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/more_cache_dir_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/list_below"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="缓存目录:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/more_cache_dir_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="1"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="right"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:scrollHorizontally="true"
+                        android:text="加载中..."
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dip"
+                        android:src="@mipmap/triangle"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/more_clear_cache_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_above"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="清空缓存"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_backup_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="自动备份"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_feedback_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:visibility="gone"
+                    android:background="@drawable/list_mid">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="意见反馈"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/more_crash_log_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="崩溃日志"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_check_update_btn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="检查更新"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_about_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="关于软件"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_change_password_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_mid"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="更改密码"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/more_logout_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dip"
+                    android:background="@drawable/list_below">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:maxLines="1"
+                        android:text="注销账号"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/triangle"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/loading_30_layout"/>
+    </FrameLayout>
+
+</ScrollView>

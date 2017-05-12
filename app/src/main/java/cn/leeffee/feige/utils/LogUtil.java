@@ -5,22 +5,22 @@ import android.util.Log;
 public class LogUtil {
 
     public static boolean isShowLog = true;//true:打印log，false:不打印log
-    public static final String TAG="FeiGe";
+
     public static void e(String message) {
         if (!isShowLog)
             return;
-        Log.e(TAG, message);
+        Log.e("USpace", message);
     }
 
     public static void d(String message) {
         if (!isShowLog)
             return;
-        Log.d(TAG, message);
+        Log.d("USpace", message);
     }
 
     public static void i(String message) {
         if (!isShowLog)
             return;
-        Log.i(TAG, message);
+        Log.i("USpace", message);
     }
 }

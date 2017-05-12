@@ -19,7 +19,7 @@ public class ActFeedbackModelImpl extends ActFeedbackContract.Model {
     public Observable<BaseResponse<String>> addSuggestion(String content, String token) {
         String jsonParams = "{method:\"addSuggestion\",params:{content:\"" + content + "\"},token:\"" + token + "\"}";
       //  LogUtil.e(jsonParams);
-        return ApiClient.getDefault(HostType.HOST_USPACE).addSuggestion(jsonParams).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return ApiClient.getDefault(HostType.HOST_USPACE).addSuggestion(ApiClient.NO_NEED_CACHE,jsonParams).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
     }
 }

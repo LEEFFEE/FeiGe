@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import cn.leeffee.feige.R;
 
+
 public class XListView extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y

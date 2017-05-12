@@ -1,49 +1,43 @@
 package cn.leeffee.feige.ui.cloud.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.leeffee.feige.App;
 import cn.leeffee.feige.R;
 import cn.leeffee.feige.base.BaseActivity;
 import cn.leeffee.feige.manager.AppManager;
-import cn.leeffee.feige.ui.cloud.adapter.DirListAdapter;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.contract.ActUploadFileExploreContract;
 import cn.leeffee.feige.ui.cloud.entity.FileInfo;
-import cn.leeffee.feige.ui.cloud.entity.USpaceFile;
 import cn.leeffee.feige.ui.cloud.model.ActUploadFileExploreModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.ActUploadFileExplorePresenterImpl;
+import cn.leeffee.feige.utils.FileUtil;
 import cn.leeffee.feige.utils.ToastUtil;
 import cn.leeffee.feige.widget.CheckableFileListView;
+import cn.leeffee.feige.widget.ChoiceRemoteDictionaryAlertDialog;
 import cn.leeffee.feige.widget.USpaceToolBar;
 
 
 public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplorePresenterImpl, ActUploadFileExploreModelImpl> implements ActUploadFileExploreContract.View, AdapterView.OnItemClickListener {
 
     /**
-     * 根路径
+     * sd卡根路径
      */
-    private static String rootPath = "/sdcard";
+    private static String sdCardRoot = FileUtil.getSDCardRoot();
 
     /**
      * 上传网盘的那个路径
@@ -56,7 +50,7 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
     /**
      * 上传目录前缀显示文本
      */
-    private String prefix = "上传目录：/我的云盘";
+    private String prefix = "上传到:";
     /**
      * 选择的类型  音乐 视频 文档 所有
      */
@@ -91,30 +85,6 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
      */
     private CheckableFileListView mFileListView;
 
-    /*=======================对话框相关=============================*/
-    /**
-     * 更改要上传到网盘哪个目录的对话框
-     */
-    AlertDialog mDialog;
-    /**
-     * 对话框中的 要上传到的目录
-     */
-    TextView tvRemoteDir;
-    /**
-     * 对话框中的要更改的路径,最终选定后赋值给currentRemotePath
-     */
-    private String destPath;
-    /**
-     * 加载前进度显示
-     */
-    LinearLayout mLoadingLayout;
-    /**
-     * 更改目录对话框中是适配器
-     */
-    DirListAdapter dirAdapter;
-
-    public static final String REQUEST_CODE_LISTDIRONLYDIR = "listDirOnlyDir";
-
     @Override
     public int getLayoutId() {
         return R.layout.act_upload_file_explore;
@@ -128,41 +98,55 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
         type = intent.getIntExtra(AppConstants.UPLOAD_TYPE, 0);
         String _rootPath = intent.getStringExtra(AppConstants.BUNDLE_KEY_ROOT_PATH);
         if (_rootPath != null) {
-            rootPath = _rootPath;
+            sdCardRoot = _rootPath;
         }
         isGroupUpload = intent.getBooleanExtra(AppConstants.IS_GROUP_UPLOAD, false);
+        if (isGroupUpload) {
+            prefix += App.getAppContext().getText(R.string.tab_group);
+            btnChangePath.setEnabled(false);
+        } else {
+            prefix += App.getAppContext().getText(R.string.tab_cloud);
+        }
     }
 
     @Override
     protected void initToolBar() {
-        mToolBar.setLeftImageVisibility(View.VISIBLE);
-        mToolBar.setLeftImage(R.mipmap.ic_menu_back);
-        //跳转到上一级
-        mToolBar.setLeftImageOnClick(new View.OnClickListener() {
+        //        mToolBar.setLeftImageVisibility(View.VISIBLE);
+        //        mToolBar.setLeftImage(R.drawable.selector_ic_menu_back);
+        mToolBar.setRightText("取消");
+        mToolBar.setRightControlOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFileListView.isRoot()) {
-                    UploadFileExploreActivity.this.finish();
-                    AppManager.getAppManager().finishActivity();
-                } else {
-                    String curPath = mFileListView.getCurrentLocalPath();
-                    String path = curPath.substring(0, curPath.lastIndexOf('/'));
-                    display(path);
-                }
+                AppManager.getAppManager().finishActivity();
             }
         });
+        //跳转到上一级
+        //        mToolBar.setLeftImageOnClick(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //                if (mFileListView.isRoot()) {
+        //                    UploadFileExploreActivity.this.finish();
+        //                    AppManager.getAppManager().finishActivity();
+        //                } else {
+        //                    String curPath = mFileListView.getCurrentLocalPath();
+        //                    String path = curPath.substring(0, curPath.lastIndexOf('/'));
+        //                    display(path);
+        //                }
+        //            }
+        //        });
     }
 
     @Override
     public void initView() {
-        mFileListView = new CheckableFileListView(this, rootPath, type);
+        mFileListView = new CheckableFileListView(this, sdCardRoot, type);
         mFileListView.setDivider(getResources().getDrawable(R.mipmap.divider_horizontal_timeline));
         mFileListView.setDividerHeight(1);
         mFileListView.setCacheColorHint(Color.TRANSPARENT);
         mFileListView.setOnItemClickListener(this);
         mFrameLayout.addView(mFileListView);
         // mFrameLayout.addView(mFileListView, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        tvCurrentLocalPath.setText(rootPath);
+        tvCurrentLocalPath.setText(sdCardRoot);
+        tvUploadPath.setText(prefix + currentRemotePath);
     }
     //    /**
     //     * 回到根目录
@@ -227,74 +211,17 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
      */
     @OnClick(R.id.upload_file_explore_change_path_btn)
     public void changeDir() {
-        destPath = "/";
-        if (mDialog == null) {
-            LayoutInflater Inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = Inflater.inflate(R.layout.dialog_change_dir, null);
-
-            mLoadingLayout = (LinearLayout) v.findViewById(R.id.loading_layout);
-            tvRemoteDir = (TextView) v.findViewById(R.id.dialog_title_dir_tv);
-            // 初始化按钮
-            v.findViewById(R.id.dialog_ok_btn).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentRemotePath = destPath;
-                    tvUploadPath.setText(prefix + currentRemotePath);
-                    mDialog.dismiss();
-                }
-            });
-
-            v.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDialog.dismiss();
-                }
-            });
-
-            // 初始化Listview，加载数据。
-            ListView dirListView = (ListView) v.findViewById(R.id.dialog_dir_list_lv);
-            dirAdapter = new DirListAdapter(mContext);
-            dirListView.setAdapter(dirAdapter);
-            dirListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    USpaceFile fileInfo = (USpaceFile) dirAdapter.getItem(position);
-                    String path = fileInfo.getDiskPath();
-                    String dir = "/我的云盘";
-                    if (fileInfo.isParent()) {
-                        path = path.substring(0, path.lastIndexOf('/'));
-                        if ("".equals(path)) {
-                            path = "/";
-                        }
-                    }
-                    dirAdapter.getData().clear();
-                    if (path.equals("/")) {
-                        dirAdapter.getData().add(0, new USpaceFile(getText(R.string.strBackToParent).toString(), 0, true, true, path, false));
-                    }
-                    dir += path;
-                    tvRemoteDir.setText(dir);
-                    dirAdapter.notifyDataSetChanged();
-                    destPath = path;
-                    mPresenter.listDirOnlyDir(destPath, REQUEST_CODE_LISTDIRONLYDIR);
-                }
-            });
-
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setView(v);
-            builder.setCancelable(true);
-            mDialog = builder.create();
-            mDialog.setCanceledOnTouchOutside(true);
-
-            Window win = mDialog.getWindow();
-            WindowManager.LayoutParams params = win.getAttributes(); // 获取对话框当前的参数值
-            params.gravity = Gravity.CENTER;
-            win.setAttributes(params);
-        }
-        mDialog.show();
-        tvRemoteDir.setText("/我的云盘");
-        mPresenter.listDirOnlyDir("/", REQUEST_CODE_LISTDIRONLYDIR);
-        //  new ListDirOnlyDirTask(UploadFileExploreActivity.this).execute("/");
+        final ChoiceRemoteDictionaryAlertDialog dialog = new ChoiceRemoteDictionaryAlertDialog(this);
+        dialog.setPrefix(getText(R.string.tab_cloud).toString());
+        dialog.setOkClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentRemotePath = dialog.getDestPath();
+                tvUploadPath.setText(prefix + currentRemotePath);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     /**
@@ -305,11 +232,8 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
     private void display(String currentLocalPath) {
         mFileListView.setCurrentLocalPath(currentLocalPath);
         mFileListView.setFileInfos(mFileListView.listFileInfos(currentLocalPath, type));
-        if (!rootPath.equals(currentLocalPath)) {
+        if (!sdCardRoot.equals(currentLocalPath)) {
             mFileListView.getFileInfos().add(0, new FileInfo("返回上一级", 0, false, true, "", null));
-            mToolBar.setLeftImageVisibility(View.GONE);
-        } else {
-            mToolBar.setLeftImageVisibility(View.VISIBLE);
         }
         mFileListView.notifyDataSetChanged();
         tvCurrentLocalPath.setText(currentLocalPath);
@@ -322,7 +246,7 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
         if (!fileInfo.isFile) {
             String currentLocalPath = mFileListView.getCurrentLocalPath();
             if (fileInfo.isParent) {
-                currentLocalPath = currentLocalPath.equals("/") ? "/" : currentLocalPath.substring(0, currentLocalPath.lastIndexOf('/'));
+                currentLocalPath = currentLocalPath.equals(sdCardRoot) ? sdCardRoot : currentLocalPath.substring(0, currentLocalPath.lastIndexOf('/'));
             } else {
                 currentLocalPath = fileInfo.filepath;
             }
@@ -346,25 +270,36 @@ public class UploadFileExploreActivity extends BaseActivity<ActUploadFileExplore
 
     @Override
     public void loadFailure(String requestCode, String msg) {
-        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR)) {
-            mLoadingLayout.setVisibility(View.GONE);
-            ToastUtil.showShort(msg);
-        }
+        //        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR_LOCAL)) {
+        //            mLoadingLayout.setVisibility(View.GONE);
+        //            ToastUtil.showShort(msg);
+        //        }
     }
 
     @Override
     public void loadBefore(String requestCode) {
-        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR)) {
-            mLoadingLayout.setVisibility(View.VISIBLE);
-        }
+        //        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR_LOCAL)) {
+        //            mLoadingLayout.setVisibility(View.VISIBLE);
+        //        }
     }
 
     @Override
     public void loadSuccess(String requestCode, Object result) {
-        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR)) {
-            dirAdapter.setData((List<USpaceFile>) result);
-            dirAdapter.notifyDataSetChanged();
-            mLoadingLayout.setVisibility(View.GONE);
+        //        if (requestCode.equals(REQUEST_CODE_LISTDIRONLYDIR_LOCAL)) {
+        //            dirAdapter.setData((List<USpaceFile>) result);
+        //            dirAdapter.notifyDataSetChanged();
+        //            mLoadingLayout.setVisibility(View.GONE);
+        //        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        String curPath = mFileListView.getCurrentLocalPath();
+        if (keyCode == KeyEvent.KEYCODE_BACK && !curPath.equals(sdCardRoot)) {
+            String path = curPath.substring(0, curPath.lastIndexOf('/'));
+            display(path);
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 }

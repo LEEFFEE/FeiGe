@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <cn.leeffee.feige.widget.ViewPagerFixed
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"/>
+    <RadioGroup
+        android:id="@+id/main_rg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/main_cloud_rb"
+            style="@style/tab_bottom"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_cloud"
+            android:tag="0"
+            android:text="@string/tab_cloud"/>
+        <RadioButton
+            android:id="@+id/main_group_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_my_group"
+            android:tag="1"
+            android:text="@string/tab_group"/>
+
+        <RadioButton
+            android:id="@+id/main_trans_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_file_trans"
+            android:tag="2"
+            android:text="@string/tab_trans"/>
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/main_file_search_rb"-->
+        <!--style="@style/tab_bottom"-->
+        <!--android:drawableTop="@drawable/selector_file_search"-->
+        <!--android:tag="3"-->
+        <!--android:text="文件搜索"/>-->
+
+        <RadioButton
+            android:id="@+id/main_setting_rb"
+            style="@style/tab_bottom"
+            android:drawableTop="@drawable/selector_setting"
+            android:tag="3"
+            android:text="@string/tab_setting"/>
+    </RadioGroup>
+</LinearLayout>

@@ -16,14 +16,18 @@ import cn.leeffee.feige.ui.cloud.constants.AppConfig;
 import cn.leeffee.feige.ui.cloud.constants.AppConstants;
 import cn.leeffee.feige.ui.cloud.contract.ActMainContract;
 import cn.leeffee.feige.ui.cloud.factory.FragmentFactory;
-import cn.leeffee.feige.ui.cloud.fragment.FileTransFragment;
+import cn.leeffee.feige.ui.cloud.fragment.TransFragment;
 import cn.leeffee.feige.ui.cloud.model.ActMainModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.ActMainPresenterImpl;
 import cn.leeffee.feige.utils.CommonUtil;
+import cn.leeffee.feige.utils.LogUtil;
 import cn.leeffee.feige.utils.SPUtil;
 import cn.leeffee.feige.utils.StringUtil;
 import cn.leeffee.feige.widget.MyProgressDialog;
 import cn.leeffee.feige.widget.ViewPagerFixed;
+
+import static cn.leeffee.feige.ui.cloud.activity.LoginActivity.REQUEST_CODE_LOGIN;
+
 
 public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainModelImpl> implements ActMainContract.View {
     @BindView(R.id.main_rg)
@@ -45,7 +49,6 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
      */
     private boolean isInterception = false;
 
-    public static final String REQUEST_CODE_LOGIN = "main_login";
     private Bundle mSavedInstanceState;
 
     public FragmentBackListener getBackListener() {
@@ -84,10 +87,11 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
     public void initView() {
         MainFragmentAdapter adapter = new MainFragmentAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
         int position = getIntent().getIntExtra(AppConstants.POSITION_FRAGMENT, -1);
-        if (position == AppConstants.POSITION_FILETRANS_FRAGMENT) {//通知跳转到文件传输界面
-            int transType = getIntent().getIntExtra("taskType", FileTransFragment.DOWNLOAD);
-            currentPosition = AppConstants.POSITION_MYFILE_FRAGMENT;
+        if (position == AppConstants.POSITION_TRANS_FRAGMENT) {//通知跳转到文件传输界面
+            int transType = getIntent().getIntExtra("taskType", TransFragment.DOWNLOAD);
+            currentPosition = AppConstants.POSITION_TRANS_FRAGMENT;
             SwitchTo(position, transType);
         } else {
             String token = SPUtil.getString(AppConfig.TOKEN);
@@ -99,8 +103,8 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
                 } else {
                     // TODO
 //                    ToastUtil.showShort("请先登录！");
-//                    startActivity(new Intent(this, LoginActivity.class));
-//                    this.finish();
+                    //                    startActivity(LoginActivity.class);
+                    //                    this.finish();
                 }
             } else {
                 if (mSavedInstanceState != null) {
@@ -118,20 +122,20 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
         CommonUtil.startTransferService(App.getAppContext());
     }
 
-    @OnClick({R.id.main_my_files_rb, R.id.main_my_group_rb, R.id.main_file_trans_rb, R.id.main_more_rb})
+    @OnClick({R.id.main_cloud_rb, R.id.main_group_rb, R.id.main_trans_rb, R.id.main_setting_rb})
     public void click(View view) {
         switch (view.getId()) {
-            case R.id.main_my_files_rb:
-                currentPosition = AppConstants.POSITION_MYFILE_FRAGMENT;
+            case R.id.main_cloud_rb:
+                currentPosition = AppConstants.POSITION_CLOUD_FRAGMENT;
                 break;
-            case R.id.main_my_group_rb:
-                currentPosition = AppConstants.POSITION_MYGROUP_FRAGMENT;
+            case R.id.main_group_rb:
+                currentPosition = AppConstants.POSITION_GROUP_FRAGMENT;
                 break;
-            case R.id.main_file_trans_rb:
-                currentPosition = AppConstants.POSITION_FILETRANS_FRAGMENT;
+            case R.id.main_trans_rb:
+                currentPosition = AppConstants.POSITION_TRANS_FRAGMENT;
                 break;
-            case R.id.main_more_rb:
-                currentPosition = AppConstants.POSITION_MORE_FRAGMENT;
+            case R.id.main_setting_rb:
+                currentPosition = AppConstants.POSITION_SETTING_FRAGMENT;
                 break;
             default:
                 break;
@@ -141,27 +145,29 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
 
     /**
      * 切换页签
+     *
      * @param position
-     * @param type 附加字段  如某个fragment中需要选中某个page页
+     * @param type     附加字段  如某个fragment中需要选中某个page页
      */
     private void SwitchTo(int position, int type) {
         switch (position) {
-            case AppConstants.POSITION_MYFILE_FRAGMENT:
-                rgMain.check(R.id.main_my_files_rb);
+            case AppConstants.POSITION_CLOUD_FRAGMENT:
+                rgMain.check(R.id.main_cloud_rb);
                 break;
-            case AppConstants.POSITION_MYGROUP_FRAGMENT:
-                rgMain.check(R.id.main_my_group_rb);
+            case AppConstants.POSITION_GROUP_FRAGMENT:
+                rgMain.check(R.id.main_group_rb);
                 break;
-            case AppConstants.POSITION_FILETRANS_FRAGMENT://文件传输
-                rgMain.check(R.id.main_file_trans_rb);
-                FileTransFragment fragment = (FileTransFragment) FragmentFactory.createFragment(2);
-                fragment.setCurrentPage(type);//FileTransFragment.DOWNLOAD;FileTransFragment.UPLOAD
+            case AppConstants.POSITION_TRANS_FRAGMENT://文件传输
+                rgMain.check(R.id.main_trans_rb);
+                TransFragment fragment = (TransFragment) FragmentFactory.createFragment(AppConstants.POSITION_TRANS_FRAGMENT);
+                fragment.setCurrentPage(type);//TransFragment.DOWNLOAD;TransFragment.UPLOAD
+                LogUtil.e("type:"+type);
                 break;
-//            case AppConstants.POSITION_FILESEARCHF_RAGMENT:
-//                rgMain.check(R.id.main_file_search_rb);
-//                break;
-            case AppConstants.POSITION_MORE_FRAGMENT:
-                rgMain.check(R.id.main_more_rb);
+            //            case AppConstants.POSITION_FILESEARCHF_RAGMENT:
+            //                rgMain.check(R.id.main_file_search_rb);
+            //                break;
+            case AppConstants.POSITION_SETTING_FRAGMENT:
+                rgMain.check(R.id.main_setting_rb);
                 break;
             default:
                 break;
@@ -298,6 +304,7 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
     public void loadSuccess(String requestCode, Object result) {
         if (requestCode.equals(REQUEST_CODE_LOGIN)) {
             SPUtil.putString(AppConfig.TOKEN, (String) result);
+            //  SwitchTo(AppConstants.POSITION_MYFILE_FRAGMENT,0);
             loginSuccess();
             pDialog.dismiss();
         }
@@ -309,5 +316,8 @@ public class MainActivity extends BaseActivity<ActMainPresenterImpl, ActMainMode
             // TODO: 2017/4/12
             pDialog.dismiss();
         }
+    }
+    public void setGroupVisibility(int visibility){
+        rgMain.setVisibility(visibility);
     }
 }

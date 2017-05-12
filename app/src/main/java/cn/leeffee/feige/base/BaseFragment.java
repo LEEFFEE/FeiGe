@@ -15,11 +15,6 @@ import cn.leeffee.feige.utils.TUtil;
 /**
  * des:基类fragment
  */
-
-/***************
- * 使用例子
- *********************/
-
 public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel> extends BasicLazyFragment {
     protected View rootView;
     public P mPresenter;
@@ -27,24 +22,24 @@ public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel>
     public RxManager mRxManager;
     // 标志位，标志已经初始化完成。
     private boolean isPrepared;
-    // Unbinder bk;
+   // Unbinder bk;
 
     @Override
     public void onAttach(Context context) {
-        LogUtil.e(this.getClass().getSimpleName() + ":onAttach");
+        LogUtil.e(this.getClass().getSimpleName()+":onAttach");
         super.onAttach(context);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtil.e(this.getClass().getSimpleName() + ":onCreate");
+        LogUtil.e(this.getClass().getSimpleName()+":onCreate");
         super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LogUtil.e(this.getClass().getSimpleName() + ":onCreateView");
+        LogUtil.e(this.getClass().getSimpleName()+":onCreateView");
         if (rootView == null)
             rootView = inflater.inflate(getLayoutResource(), container, false);
         mRxManager = new RxManager();
@@ -65,37 +60,36 @@ public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel>
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        LogUtil.e(this.getClass().getSimpleName() + ":onActivityCreated");
+        LogUtil.e(this.getClass().getSimpleName()+":onActivityCreated");
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onStart");
+        LogUtil.e(this.getClass().getSimpleName()+":onStart");
         super.onStart();
     }
 
     @Override
     public void onResume() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onResume");
+        LogUtil.e(this.getClass().getSimpleName()+":onResume");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onPause");
+        LogUtil.e(this.getClass().getSimpleName()+":onPause");
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onStop");
+        LogUtil.e(this.getClass().getSimpleName()+":onStop");
         super.onStop();
     }
-
     @Override
     public void onDestroyView() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onDestroyView");
+        LogUtil.e(this.getClass().getSimpleName()+":onDestroyView");
         super.onDestroyView();
         if (mPresenter != null)
             mPresenter.onDestroy();
@@ -104,13 +98,13 @@ public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel>
 
     @Override
     public void onDestroy() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onDestroy");
+        LogUtil.e(this.getClass().getSimpleName()+":onDestroy");
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        LogUtil.e(this.getClass().getSimpleName() + ":onDetach");
+        LogUtil.e(this.getClass().getSimpleName()+":onDetach");
         super.onDetach();
     }
 
@@ -119,7 +113,7 @@ public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel>
         if (!isPrepared || !isVisible) {
             return;
         }
-        LogUtil.e(this.getClass().getSimpleName() + ":lazyLoad");
+        LogUtil.e(this.getClass().getSimpleName()+":lazyLoad");
         initData();
     }
 
@@ -134,21 +128,18 @@ public abstract class BaseFragment<P extends BasePresenter, M extends BaseModel>
 
     //简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
     public abstract void initPresenter();
-
     /**
      * 初始化view
      */
     protected abstract void initView();
-
     /**
      * 初始化数据
      */
-    protected void initData() {
-    }
+    protected abstract void initData();
 
-    //    public void showToastWithImg(String text, int res) {
-    //        ToastUtil.showToastWithImg(text, res);
-    //    }
+//    public void showToastWithImg(String text, int res) {
+//        ToastUtil.showToastWithImg(text, res);
+//    }
 
     //    /**
     //     * 网络访问错误提醒

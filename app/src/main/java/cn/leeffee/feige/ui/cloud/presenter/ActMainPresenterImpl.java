@@ -27,16 +27,15 @@ public class ActMainPresenterImpl extends ActMainContract.Presenter {
                 @Override
                 public void accept(@NonNull BaseResponse<String> res) throws Exception {
                     if (res.getErrorCode() != 0 && TextUtils.isEmpty(res.getResult())) {
-                        mView.loadSuccess(requestCode,res.getResult());
+                        mView.loadSuccess(requestCode, res.getResult());
                     } else {
-                        mView.loadFailure(requestCode, "登录失败");
+                        mView.loadFailure(requestCode, res.getErrorMessage());
                     }
                 }
             }, new Consumer<Throwable>() {
                 @Override
                 public void accept(@NonNull Throwable throwable) throws Exception {
-                    throwable.printStackTrace();
-                    mView.loadFailure(requestCode, "无法连接到服务器");
+                    handlerThrowable(requestCode, throwable);
                 }
             });
         } else {

@@ -4,10 +4,10 @@ package cn.leeffee.feige.ui.cloud.factory;
 import java.util.HashMap;
 
 import cn.leeffee.feige.base.BaseFragment;
-import cn.leeffee.feige.ui.cloud.fragment.FileTransFragment;
-import cn.leeffee.feige.ui.cloud.fragment.MoreFragment;
-import cn.leeffee.feige.ui.cloud.fragment.MyFileFragment;
-import cn.leeffee.feige.ui.cloud.fragment.MyGroupFragment;
+import cn.leeffee.feige.ui.cloud.fragment.CloudFragment;
+import cn.leeffee.feige.ui.cloud.fragment.GroupFragment;
+import cn.leeffee.feige.ui.cloud.fragment.SettingFragment;
+import cn.leeffee.feige.ui.cloud.fragment.TransFragment;
 
 /**
  * 生产fragment工厂
@@ -24,16 +24,16 @@ public class FragmentFactory {
         }
         switch (pos) {
             case 0:
-                fragment = new MyFileFragment();
+                fragment = new CloudFragment();
                 break;
             case 1:
-                fragment = new MyGroupFragment();
+                fragment = new GroupFragment();
                 break;
             case 2:
-                fragment = new FileTransFragment();
+                fragment = new TransFragment();
                 break;
             case 3:
-                fragment = new MoreFragment();
+                fragment = new SettingFragment();
                 break;
             default:
                 break;

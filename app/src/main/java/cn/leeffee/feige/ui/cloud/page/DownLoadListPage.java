@@ -1,12 +1,12 @@
 package cn.leeffee.feige.ui.cloud.page;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,8 +23,9 @@ import cn.leeffee.feige.App;
 import cn.leeffee.feige.R;
 import cn.leeffee.feige.base.BasePage;
 import cn.leeffee.feige.ui.cloud.adapter.DownloadListAdapter;
+import cn.leeffee.feige.ui.cloud.adapter.DownloadListHolder;
+import cn.leeffee.feige.ui.cloud.adapter.FileTransBaseAdapter;
 import cn.leeffee.feige.ui.cloud.contract.PageDownloadListContract;
-import cn.leeffee.feige.ui.cloud.exception.ClientIOException;
 import cn.leeffee.feige.ui.cloud.model.PageDownloadListModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.PageDownloadListPresenterImpl;
 import cn.leeffee.feige.ui.cloud.service.DownloadService;
@@ -52,7 +54,6 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
     private List<DownloadTask> mTasks;
     private DownloadListAdapter mAdapter;
     private static final String REQUEST_CODE_LIST_DOWNLOAD_QUEUE = "db_listDownloadQueue";
-    private FileUtil mFileUtil;
     private DownloadReceiver mDownloadReceiver;
 
 
@@ -69,7 +70,7 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
                 View view = null;
                 if (task != null && task.getStatus() != ITransferConstants.STATUS_CANCEL) {// 5取消下载（未完成, 删除已下载的文件.tmp）
                     DownloadTask mTask = null;
-                    DownloadListAdapter.ViewHolder tag = new DownloadListAdapter.ViewHolder();
+                    DownloadListHolder tag = new DownloadListHolder(null);
                     tag.taskId = task.getId();
                     for (int i = 0; i < mAdapter.getCount(); i++) {
                         if (task.getId() == mAdapter.getItem(i).getId()) {
@@ -84,7 +85,7 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
                     }
                     view = mListView.findViewWithTag(tag);
                     if (null != view) {
-                        DownloadListAdapter.ViewHolder holder = (DownloadListAdapter.ViewHolder) view.getTag();
+                        DownloadListHolder holder = (DownloadListHolder) view.getTag();
                         mAdapter.changeProgressStatus(holder, task);
                         //  LogUtil.e("下载的findViewWithTag 能找到View");
                     }
@@ -101,38 +102,38 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
 
     }
 
-    public DownLoadListPage(Activity act) {
-        super(act);
+    public DownLoadListPage(Fragment frag) {
+        super(frag);
     }
 
-    public DownLoadListPage(Activity act, String title) {
-        super(act, title);
+    public DownLoadListPage(Fragment frag, String title) {
+        super(frag, title);
+    }
+
+    @Override
+    public View createView() {
+        return LayoutInflater.from(App.getAppContext()).inflate(R.layout.trans_download_list, null);
     }
 
     @Override
     protected void initPresenter() {
-        mAdapter = new DownloadListAdapter(mAct);
-        mListView.setAdapter(mAdapter);
         mPresenter.setVM(this, mModel);
-        mDownloadReceiver = new DownloadReceiver();
-        App.getAppContext().registerReceiver(mDownloadReceiver, new IntentFilter(DownloadService.DOWNLOAD_RECEIVER_ACTION));
-        try {
-            mFileUtil = FileUtil.newInstance();
-        } catch (ClientIOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
-    public View initView() {
-        return LayoutInflater.from(App.getAppContext()).inflate(R.layout.trans_download_list, null);
+    protected void initView() {
+        mAdapter = new DownloadListAdapter(mFrag);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
+        mTasks = new ArrayList<>();
+        mDownloadReceiver = new DownloadReceiver();
+        App.getAppContext().registerReceiver(mDownloadReceiver, new IntentFilter(DownloadService.DOWNLOAD_RECEIVER_ACTION));
     }
 
     @Override
     public void initData() {
         Integer arrStatus[] = new Integer[]{1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13};
         mPresenter.listDownloadQueue(arrStatus, REQUEST_CODE_LIST_DOWNLOAD_QUEUE);
-        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -155,7 +156,7 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
             return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mAct);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mFrag.getActivity());
         builder.setTitle(R.string.strMenu);
         builder.setItems(new String[]{App.getAppContext().getText(R.string.menu_title_open_file).toString()}, new DialogInterface.OnClickListener() {
             @Override
@@ -163,7 +164,7 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
                 if (which == 0) {
                     if (task.getType() == DownloadTask.SHARED_FILE_TYPE) {
                         if (FileUtil.isFileExist(task.getSavePath())) {
-                            Intent intent = FileViewer.openFileIntent(task.getSavePath());
+                            Intent intent = FileViewer.getOpenFileIntent(task.getSavePath());
                             if (intent != null) {
                                 App.getAppContext().startActivity(intent);
                             }
@@ -172,7 +173,7 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
                         }
                     } else {
                         if (FileUtil.isFileExist(task.getSavePath())) {
-                            Intent intent = FileViewer.openFileIntent(task.getSavePath());
+                            Intent intent = FileViewer.getOpenFileIntent(task.getSavePath());
                             if (intent != null) {
                                 App.getAppContext().startActivity(intent);
                             }
@@ -186,48 +187,12 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
         builder.create();
         builder.show();
     }
-
-    @Override
-    public void loadBefore(String requestCode) {
-        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
-            mLoading.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void loadSuccess(String requestCode, Object result) {
-        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
-            mTasks = (List<DownloadTask>) result;
-            mAdapter.setData(mTasks);
-            mAdapter.notifyDataSetChanged();
-            isShowEmpty(mTasks);
-            mLoading.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void loadFailure(String requestCode, String msg) {
-        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
-            mLoading.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * Fragment销毁时先执行
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //        if (mDownloadReceiver != null) {
-        //            App.getAppContext().unregisterReceiver(mDownloadReceiver);
-        //        }
-    }
-
     /**
      * 数据是否为空提示
      *
      * @param list
      */
+    @Override
     public void isShowEmpty(List list) {
         if (list != null && list.size() > 0) {
             mEmpty.setVisibility(View.GONE);
@@ -271,5 +236,46 @@ public class DownLoadListPage extends BasePage<PageDownloadListPresenterImpl, Pa
                 ToastUtil.showShort("网络异常，停止下载[" + task.getName() + "]");
                 break;
         }
+    }
+
+    @Override
+    public void loadBefore(String requestCode) {
+        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
+            mLoading.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void loadSuccess(String requestCode, Object result) {
+        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
+            mTasks = (List<DownloadTask>) result;
+            mAdapter.setData(mTasks);
+            mAdapter.notifyDataSetChanged();
+            isShowEmpty(mTasks);
+            mLoading.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void loadFailure(String requestCode, String msg) {
+        if (REQUEST_CODE_LIST_DOWNLOAD_QUEUE.equals(requestCode)) {
+            mLoading.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Fragment销毁时先执行
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //        if (mDownloadReceiver != null) {
+        //            App.getAppContext().unregisterReceiver(mDownloadReceiver);
+        //        }
+    }
+
+    @Override
+    public FileTransBaseAdapter getAdapter() {
+        return mAdapter;
     }
 }

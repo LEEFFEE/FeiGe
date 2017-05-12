@@ -15,5 +15,7 @@ public class AppConfig {
 
     public static final String DOWNLOAD_CONFIRM = "download.confirm";
 
-    public static final String SERVER = "uspace.server";
+    public static final String SERVER = "feige.server";
+
+    public static final String PORT = "feige.port";
 }

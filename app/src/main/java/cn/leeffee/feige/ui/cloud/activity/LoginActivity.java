@@ -2,10 +2,8 @@ package cn.leeffee.feige.ui.cloud.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,21 +16,21 @@ import cn.leeffee.feige.ui.cloud.model.ActLoginModelImpl;
 import cn.leeffee.feige.ui.cloud.presenter.ActLoginPresenterImpl;
 import cn.leeffee.feige.utils.PropertyUtil;
 import cn.leeffee.feige.utils.SPUtil;
-import cn.leeffee.feige.utils.StringUtil;
 import cn.leeffee.feige.utils.ToastUtil;
+import cn.leeffee.feige.widget.USpaceEditText;
 
 public class LoginActivity extends BaseActivity<ActLoginPresenterImpl, ActLoginModelImpl> implements ActLoginContract.View {
 
     @BindView(R.id.login_account_et)
-    EditText loginAccountEt = null;
+    USpaceEditText loginAccountEt;
     @BindView(R.id.login_pwd_et)
-    EditText passwordEt = null;
+    USpaceEditText passwordEt;
 
     private String loginAccount = null;
     private String password = null;
     ProgressDialog progressDialog;
 
-    private static final String REQUEST_CODE_LOGIN = "REQUEST_CODE_LOGIN";
+    public static final String REQUEST_CODE_LOGIN = "REQUEST_CODE_LOGIN";
 
     @Override
     public int getLayoutId() {
@@ -50,26 +48,30 @@ public class LoginActivity extends BaseActivity<ActLoginPresenterImpl, ActLoginM
     }
 
     private void initData() {
-        if (TextUtils.isEmpty(PropertyUtil.getServer())) {
+        if (TextUtils.isEmpty(PropertyUtil.getInstance().getServer())) {
             loginAccountEt.setText("");
             passwordEt.setText("");
             ToastUtil.showShort("请先设置服务器");
             return;
         }
         String account = SPUtil.getString(AppConfig.ACCOUNT);
+        //        String password = StringUtil.decrypt(SPUtil.getString(AppConfig.PASSWORD));
+        //        if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)) {
+        //            startActivity(new Intent(this, MainActivity.class));
+        //            this.finish();
+        //        } else {
+        //        }
         loginAccountEt.setText(account);
-        String password = StringUtil.decrypt(SPUtil.getString(AppConfig.PASSWORD));
-        passwordEt.setText(password);
     }
 
     @OnClick(R.id.login_login_btn)
     public void loginClick(View v) {
-        if (TextUtils.isEmpty(PropertyUtil.getServer())) {
-            loginAccountEt.setText("");
-            passwordEt.setText("");
-            ToastUtil.showShort("请先设置服务器");
-            return;
-        }
+//        if (TextUtils.isEmpty(PropertyUtil.getInstance().getServer())) {
+//            loginAccountEt.setText("");
+//            passwordEt.setText("");
+//            ToastUtil.showShort("请先设置服务器");
+//            return;
+//        }
         loginAccount = loginAccountEt.getText().toString();
         password = passwordEt.getText().toString();
         mPresenter.login(loginAccount, password, REQUEST_CODE_LOGIN);
@@ -90,7 +92,7 @@ public class LoginActivity extends BaseActivity<ActLoginPresenterImpl, ActLoginM
 
     @OnClick(R.id.login_server_setting_tv)
     public void serverSetting(View v) {
-        startActivity(new Intent(this, ServerSettingActivity.class));
+        startActivity(ServerSettingActivity.class);
     }
 
 
@@ -118,7 +120,7 @@ public class LoginActivity extends BaseActivity<ActLoginPresenterImpl, ActLoginM
                 progressDialog.dismiss();
                 progressDialog = null;
             }
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(MainActivity.class);
             AppManager.getAppManager().finishActivity();
         }
     }

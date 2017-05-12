@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:title="查看日志" android:id="@+id/menu_group_log" android:visible="false"/>
 	<item android:title="下载" android:id="@+id/menu_group_download" android:visible="false"/>
-	<item android:title="复制到个人空间" android:id="@+id/menu_group_copy" android:visible="false"/>
+	<item android:title="复制到个人空间" android:id="@+id/menu_group_copy_to_my_space" android:visible="false"/>
 	<item android:title="删除" android:id="@+id/menu_group_delete" android:visible="false"/>
 </menu>

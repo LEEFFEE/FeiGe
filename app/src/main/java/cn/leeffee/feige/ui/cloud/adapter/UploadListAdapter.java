@@ -1,28 +1,17 @@
 package cn.leeffee.feige.ui.cloud.adapter;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.leeffee.feige.App;
 import cn.leeffee.feige.R;
-import cn.leeffee.feige.ui.cloud.db.DBTool;
 import cn.leeffee.feige.ui.cloud.factory.PageFactory;
-import cn.leeffee.feige.ui.cloud.page.DownLoadListPage;
+import cn.leeffee.feige.ui.cloud.fragment.TransFragment;
 import cn.leeffee.feige.ui.cloud.service.ITransferConstants;
 import cn.leeffee.feige.ui.cloud.service.IUploadService;
 import cn.leeffee.feige.ui.cloud.service.UploadTask;
@@ -30,171 +19,34 @@ import cn.leeffee.feige.utils.StringUtil;
 import cn.leeffee.feige.utils.ToastUtil;
 
 /**
- * Created by lhfei on 2017/4/11.
+ * Created by lhfei on 2017/5/5.
  */
 
-public class UploadListAdapter extends BaseAdapter {
+public class UploadListAdapter extends FileTransBaseAdapter<UploadTask> {
     private static final String TAG = "UploadListAdapter";
-    private List<UploadTask> data;
-    private Activity mAct;
-    private DBTool mDBTool;
+    private Fragment mFrag;
 
-    public void setData(List<UploadTask> data) {
-        this.data = data;
-    }
-
-    public UploadListAdapter(Activity act) {
-        mAct = act;
-        data = new ArrayList<>();
-        mDBTool = new DBTool(act);
+    public UploadListAdapter(Fragment frag) {
+        super();
+        mFrag = frag;
     }
 
     @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public UploadTask getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        final UploadTask task = data.get(position);
-        if (convertView == null) {
-            convertView = View.inflate(App.getAppContext(), R.layout.progress_upload, null);
-            holder = new ViewHolder(convertView);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.taskId = task.getId();
-        holder.mProgressBar.setMax(100);
-        holder.mFileName.setText(task.getName());
-        holder.mAddQueueTime.setText(task.getAddQueueTime());
-        changeProgressStatus(holder, task);
-        // 等待或在运行的下载
-        holder.mCancel.setTag(task);
-        holder.mCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                new android.app.AlertDialog.Builder(mAct).setTitle("提示").setMessage("确认删除吗？").setPositiveButton(R.string.strOk, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        UploadTask task = (UploadTask) v.getTag();
-                        if (task.getStatus() == ITransferConstants.NET_EXCEPTION) {
-                            updateUploadTask(task, ITransferConstants.STATUS_CANCEL);
-                        } else if (task.getStatus() == ITransferConstants.STATUS_FINISH ||
-                                task.getStatus() == ITransferConstants.STATUS_WAIT ||
-                                task.getStatus() == ITransferConstants.SERVER_RESPONSE_ERROR ||
-                                task.getStatus() == ITransferConstants.SERVER_RESPONSE_PARSE_ERROR ||
-                                task.getStatus() == ITransferConstants.TRANSFER_FAIL_ERROR ||
-                                task.getStatus() == ITransferConstants.FILE_NOT_EXIST) {
-                            updateUploadTask(task, ITransferConstants.STATUE_DELETE);// 删除记录
-                        } else { // service 中终止任务、并更改记录状态
-                            try {
-                                IUploadService service = App.uploadService;
-                                if (service != null) {
-                                    if (service.cancelTask(task.getId())) {// 中断上传过程
-                                        data.remove(task);
-                                        UploadListAdapter.this.notifyDataSetChanged();
-                                        ToastUtil.showShort("已删除上传[" + task.getName() + "]记录。");
-                                    }
-                                }
-                            } catch (Exception e) {
-                                Log.i(TAG, e.toString(), e);
-                            }
-                        }
-                    }
-                }).setNegativeButton(R.string.strCancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
-            }
-        });
-        return convertView;
+    public BaseHolder<UploadTask> getHolder(int position) {
+        return new UploadListHolder(this);
     }
 
     /**
      * 点击取消时 更新上传任务信息
-     *
-     * @param task
-     * @param type
      */
-    private void updateUploadTask(UploadTask task, int type) {
+    public void deleteUploadTask(UploadTask task) {
         try {
-            Log.i(TAG, "updateStatus : " + "taskId=" + task.getId() + ", status=" + type);
-            Map<String, Object> statusMap = new HashMap<>();
-            statusMap.put("status", type);
-            mDBTool.updateUploadTask(task.getId(), statusMap);
-            data.remove(task);
-            notifyDataSetChanged();
+            mDBTool.deleteUploadTasks(task.getId());
+            getData().remove(task);
             ToastUtil.showShort("已删除上传[" + task.getName() + "]记录。");
-            ((DownLoadListPage) PageFactory.createPage(1, mAct)).isShowEmpty(data);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            ToastUtil.showShort("取消上传[" + task.getName() + "]失败！");
-        }
-    }
-
-
-    public static class ViewHolder {
-        @BindView(R.id.upload_progress_filename_tv)
-        public TextView mFileName;//文件名
-        @BindView(R.id.upload_progress_center_rl)
-        public RelativeLayout mCenterLayout;//中的布局  包有进度条和百分比文本的相对布局
-        @BindView(R.id.upload_progress_percentage_tv)
-        public TextView mPercentage;//百分比
-        @BindView(R.id.upload_progress_pb)
-        public ProgressBar mProgressBar; //进度条
-        @BindView(R.id.upload_progress_cancel_btn)
-        public Button mCancel;//取消下载
-        @BindView(R.id.upload_progress_complete_size_tv)
-        public TextView mCompleteSize;//已经下载完成大小
-        @BindView(R.id.upload_progress_add_queue_time_tv)
-        public TextView mAddQueueTime; //开始下载的时间
-        public Integer taskId;
-
-        public ViewHolder() {
-
-        }
-
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-            view.setTag(this);
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ((taskId == null) ? 0 : taskId.hashCode());
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            ViewHolder other = (ViewHolder) obj;
-            if (taskId == null) {
-                if (other.taskId != null)
-                    return false;
-            } else if (!taskId.equals(other.taskId))
-                return false;
-            return true;
+            ToastUtil.showShort("删除上传[" + task.getName() + "]失败！");
         }
     }
 
@@ -204,10 +56,13 @@ public class UploadListAdapter extends BaseAdapter {
      * @param holder
      * @param task
      */
-    public void changeProgressStatus(ViewHolder holder, UploadTask task) {
+    public void changeProgressStatus(UploadListHolder holder, UploadTask task) {
         holder.mProgressBar.setProgress(task.getPercent());
         holder.mCenterLayout.setVisibility(View.VISIBLE);
         switch (task.getStatus()) {
+            case ITransferConstants.STATUS_PAUSE:
+                holder.mPercentage.setText("暂停中...");
+                break;
             case ITransferConstants.TRANSFER_FAIL_ERROR:
                 holder.mPercentage.setText("上传文件失败");
                 break;
@@ -237,5 +92,82 @@ public class UploadListAdapter extends BaseAdapter {
                 holder.mCompleteSize.setText(StringUtil.getFileSize(task.getUploadLength()) + "/" + StringUtil.getFileSize(task.getFileLength()));
                 break;
         }
+    }
+
+    /**
+     * 删除选中的条目
+     */
+    @Override
+    public void delete() {
+        List<UploadTask> tasks = getSelectedTasks();
+        for (UploadTask task : tasks) {
+            if (task.getStatus() == ITransferConstants.STATUS_RUN) {
+                try {
+                    IUploadService service = App.uploadService;
+                    if (service != null) {
+                        service.cancelTask(task.getId());// 中断上传过程
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, e.toString(), e);
+                }
+            }
+            getData().remove(task);
+            mDBTool.deleteUploadTasks(task.getId());
+        }
+        notifyShow();
+    }
+
+    /**
+     * 通知界面刷新
+     */
+    public void notifyShow() {
+        this.notifyDataSetChanged();
+        PageFactory.createPage(TransFragment.UPLOAD, mFrag).isShowEmpty(getData());
+        notifyShowOnItem();
+    }
+    /**
+     * 触发checkbox时界面刷新
+     */
+    public void notifyShowOnItem() {
+        ((TransFragment) mFrag).onSelectedCountChange(getSelectedTasks().size());
+    }
+
+    /**
+     * 删除条目
+     *
+     * @param task
+     */
+    public void deleteItem(final UploadTask task) {
+        new AlertDialog.Builder(mFrag.getActivity()).setTitle("提示").setMessage("确认删除吗？").setPositiveButton(R.string.strOk, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (task.getStatus() == ITransferConstants.NET_EXCEPTION ||
+                        task.getStatus() == ITransferConstants.STATUS_PAUSE ||
+                        task.getStatus() == ITransferConstants.STATUS_FINISH ||
+                        task.getStatus() == ITransferConstants.STATUS_WAIT ||
+                        task.getStatus() == ITransferConstants.SERVER_RESPONSE_ERROR ||
+                        task.getStatus() == ITransferConstants.SERVER_RESPONSE_PARSE_ERROR ||
+                        task.getStatus() == ITransferConstants.TRANSFER_FAIL_ERROR ||
+                        task.getStatus() == ITransferConstants.FILE_NOT_EXIST) {
+                    deleteUploadTask(task);// 删除记录
+                } else { // service 中终止任务、并更改记录状态
+                    try {
+                        IUploadService service = App.uploadService;
+                        if (service != null) {
+                            service.cancelTask(task.getId()); // 中断上传过程
+                            deleteUploadTask(task);
+                        }
+                    } catch (Exception e) {
+                        Log.i(TAG, e.toString(), e);
+                    }
+                }
+                notifyShow();
+            }
+        }).setNegativeButton(R.string.strCancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 }

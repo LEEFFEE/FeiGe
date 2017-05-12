@@ -10,20 +10,37 @@
  */
 package cn.leeffee.feige.utils;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.StatFs;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.view.Window;
+import android.view.WindowManager;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cn.leeffee.feige.App;
-import cn.leeffee.feige.ui.cloud.service.BackupService;
 import cn.leeffee.feige.ui.cloud.service.DownloadService;
 import cn.leeffee.feige.ui.cloud.service.UploadService;
 
@@ -39,13 +56,13 @@ public class CommonUtil {
     public static void startTransferService(Context context) {
         context.getApplicationContext().startService(new Intent(context, DownloadService.class));
         context.getApplicationContext().startService(new Intent(context, UploadService.class));
-        context.getApplicationContext().startService(new Intent(context, BackupService.class));
+        // context.getApplicationContext().startService(new Intent(context, BackupService.class));
     }
 
     public static void stopTransferService(Context context) {
         context.getApplicationContext().stopService(new Intent(context, DownloadService.class));
         context.getApplicationContext().stopService(new Intent(context, UploadService.class));
-        context.getApplicationContext().stopService(new Intent(context, BackupService.class));
+        //  context.getApplicationContext().stopService(new Intent(context, BackupService.class));
     }
 
     /**
@@ -109,5 +126,174 @@ public class CommonUtil {
             cursor.close();
         }
         return path;
+    }
+
+    /**
+     * 设置隐藏标题栏
+     *
+     * @param activity
+     */
+    public static void setNoTitleBar(Activity activity) {
+        activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    }
+
+    /**
+     * 设置全屏
+     *
+     * @param activity
+     */
+    public static void setFullScreen(Activity activity) {
+        activity.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 取消全屏
+     *
+     * @param activity
+     */
+    public static void cancelFullScreen(Activity activity) {
+        activity.getWindow().clearFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * @return 获取sd卡的可用空间
+     */
+    public static long getAvailableSd() {
+        File path = Environment.getExternalStorageDirectory();
+        StatFs sf = new StatFs(path.getPath());
+        long availableBlocks = sf.getAvailableBlocks();
+        long blockSize = sf.getBlockSize();
+        return availableBlocks * blockSize;
+    }
+
+    /**
+     * @return 获取Rom的可用空间
+     */
+    public static long getAvailableRom() {
+        File path = Environment.getDataDirectory();
+        StatFs sf = new StatFs(path.getPath());
+        long availableBlocks = sf.getAvailableBlocks();
+        long blockSize = sf.getBlockSize();
+        return availableBlocks * blockSize;
+    }
+
+    /**
+     * @return 获取Ram的可用空间
+     */
+    public static long getAvailableRam(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo outInfo = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(outInfo);
+        return outInfo.availMem;
+    }
+
+    /**
+     * @return 获取Ram的总空间
+     */
+    public static long getTotalRam(Context context) {
+        if (Build.VERSION.SDK_INT >= 16) {
+            ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+            ActivityManager.MemoryInfo outInfo = new ActivityManager.MemoryInfo();
+            am.getMemoryInfo(outInfo);
+            return outInfo.totalMem;
+        } else {
+            File file = new File("/proc/meminfo");
+            StringBuffer sb = new StringBuffer();
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                String line = br.readLine();
+                // 获取数字
+                char[] charArray = line.toCharArray();
+                for (char c : charArray) {
+                    if (c >= '0' && c <= '9') {
+                        sb.append(c);
+                    }
+                }
+                String string = sb.toString();
+                // 转化成long
+                long parseLong = Long.parseLong(string);
+                return parseLong * 1024;
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            return 0;
+        }
+    }
+
+    public static String hashKeyForDisk(String key) {
+        String cacheKey;
+        try {
+            final MessageDigest mDigest = MessageDigest.getInstance("MD5");
+            mDigest.update(key.getBytes());
+            cacheKey = bytesToHexString(mDigest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            cacheKey = String.valueOf(key.hashCode());
+        }
+        return cacheKey;
+    }
+
+    public static String bytesToHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(0xFF & bytes[i]);
+            if (hex.length() == 1) {
+                sb.append('0');
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
+    }
+
+    public static byte[] bitmap2Bytes(Bitmap bm) {
+        if (bm == null) {
+            return null;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
+    }
+
+    public static Bitmap bytes2Bitmap(byte[] bytes) {
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+
+    /**
+     * Drawable → Bitmap
+     */
+    public static Bitmap drawable2Bitmap(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
+        // 取 drawable 的长宽
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
+        // 取 drawable 的颜色格式
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /*
+         * Bitmap → Drawable
+		 */
+    @SuppressWarnings("deprecation")
+    public static Drawable bitmap2Drawable(Bitmap bm) {
+        if (bm == null) {
+            return null;
+        }
+        BitmapDrawable bd = new BitmapDrawable(bm);
+        bd.setTargetDensity(bm.getDensity());
+        return new BitmapDrawable(bm);
     }
 }

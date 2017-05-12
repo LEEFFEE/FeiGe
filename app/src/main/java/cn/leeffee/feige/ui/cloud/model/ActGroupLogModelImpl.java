@@ -24,6 +24,6 @@ public class ActGroupLogModelImpl extends ActGroupLogContract.Model {
     public Observable<BaseResponse<List<ApiGroupLog>>> listGroupLogs(String groupId, int pageIndex, int pageSize, String token) {
         // String jsonParams = "{method:'queryShareGroupLogs',params:{'groupId':'" + groupId + "','startDate':'','endDate':'','pageIndex':'" + pageIndex + "','pageSize':'" + pageSize + "','clientType':'" + CLIENT_TYPE + "'},token:'" + token + "'}";
         String jsonParams = "{\"method\":\"queryShareGroupLogs\",\"params\":{\"groupId\":\"" + groupId + "\",\"startDate\":\"\",\"endDate\":\"\",\"pageIndex\":\"" + pageIndex + "\",\"pageSize\":\"" + pageSize + "\",\"clientType\":\"" + CLIENT_TYPE + "\"},\"token\":\"" + token + "\"}";
-        return ApiClient.getDefault(HostType.HOST_USPACE).listGroupLogs(jsonParams).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+        return ApiClient.getDefault(HostType.HOST_USPACE).listGroupLogs(ApiClient.NEED_CACHE,jsonParams).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
     }
 }

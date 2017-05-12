@@ -172,7 +172,7 @@ public class BackupActivity extends BaseActivity<ActBackupPresenterImpl, ActBack
     @Override
     protected void initToolBar() {
         mToolBar.setLeftImageVisibility(View.VISIBLE);
-        mToolBar.setLeftImage(R.mipmap.ic_menu_back);
+        mToolBar.setLeftImage(R.drawable.selector_ic_menu_back);
         mToolBar.setLeftImageOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

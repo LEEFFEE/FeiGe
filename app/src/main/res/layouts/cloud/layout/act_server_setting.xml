@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#99ffffff"
-    tools:context=".ui.cloud.activity.SearchActivity">
+    tools:context=".ui.cloud.activity.ServerSettingActivity">
 
     <!--<RelativeLayout-->
     <!--android:id="@+id/server_setting_rl"-->
@@ -40,11 +40,36 @@
         android:layout_height="wrap_content"
         app:center_title="服务器设置"/>
 
+    <RadioGroup
+        android:id="@+id/server_setting_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/server_setting_toolbar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <RadioButton
+            android:id="@+id/server_setting_ip_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="使用IP"/>
+
+        <RadioButton
+            android:id="@+id/server_setting_domain_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="使用域名"/>
+    </RadioGroup>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/server_setting_toolbar"
-        android:padding="30dp">
+        android:layout_below="@id/server_setting_rg"
+        android:paddingBottom="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <TextView
             android:id="@+id/server_host_tv"
@@ -52,13 +77,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="服务器地址"
-            android:textColor="@color/uspace_textColorSecondary"
-            android:textSize="20sp"/>
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
 
-        <EditText
+        <cn.leeffee.feige.widget.USpaceEditText
             android:id="@+id/server_host_et"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/server_host_tv"
@@ -66,7 +91,9 @@
             android:background="@drawable/qq_edit_login"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:textColor="@color/uspace_textColorSecondary"/>
+            android:hint="域名或者ip地址"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
 
 
         <TextView
@@ -77,27 +104,31 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:text="服务器端口"
-            android:textColor="@color/uspace_textColorSecondary"
-            android:textSize="20sp"/>
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/server_port_et"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_below="@+id/server_port_tv"
             android:layout_marginTop="10dp"
             android:background="@drawable/qq_edit_login"
-            android:textColor="@color/uspace_textColorSecondary"/>
+            android:hint="1~65535"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/ok_btn"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_below="@id/server_port_et"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_login_bg"
             android:text="确   定"
             android:textColor="@color/uspace_textColor"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
     </RelativeLayout>
 </RelativeLayout>

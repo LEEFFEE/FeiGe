@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/listview_bg"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
+    android:background="@drawable/listview_bg"
     android:padding="3dp">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="3dp">
@@ -79,14 +80,44 @@
                 android:textSize="10dip"/>
         </RelativeLayout>
     </LinearLayout>
+    <!--<Button-->
+    <!--android:id="@+id/upload_progress_cancel_btn"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_margin="3dp"-->
+    <!--android:background="@drawable/btn_style_delete"-->
+    <!--android:focusable="false"-->
+    <!--android:visibility="visible"/>-->
+    <FrameLayout
 
-    <Button
-        android:id="@+id/upload_progress_cancel_btn"
-        android:layout_width="40dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="3dp"
-        android:background="@drawable/btn_style_delete"
-        android:focusable="false"
-        android:visibility="visible"/>
+        android:layout_width="35dp"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/upload_progress_delete_btn"
+            android:layout_width="28dp"
+            android:layout_height="31dp"
+            android:padding="3dp"
+            android:background="@drawable/btn_style_delete"
+            android:visibility="visible"
+            android:layout_gravity="center"/>
+
+        <!--<CheckBox-->
+            <!--android:id="@+id/upload_progress_running_status"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:button="@drawable/selector_item_running_status"/>-->
+
+        <CheckBox
+            android:id="@+id/upload_progress_check_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+           />
+            <!--android:button="@drawable/selector_item_check_status"-->
+    </FrameLayout>
 </LinearLayout>

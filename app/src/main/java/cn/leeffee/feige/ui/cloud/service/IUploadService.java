@@ -12,4 +12,5 @@ public interface IUploadService {
     void unlock();
 
     UploadTask getExcTask();
+    void pauseTask(int id);
 }
